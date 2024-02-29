@@ -1,5 +1,6 @@
 import "./App.css";
 import { Routes, Route, Navigate } from "react-router";
+import homeRoutes from "./data/homeRoutes";
 
 //components
 import Lineup from "./pages/Lineup";
@@ -11,16 +12,6 @@ import Wrapper from "./components/Wrapper";
 import Header from "./components/Header";
 
 function App() {
-  const homeRoutes = [
-    {
-      routeLink: "/",
-      routeName: "Lineup",
-    },
-    {
-      routeLink: "schedule",
-      routeName: "Schedule",
-    },
-  ];
   return (
     <Wrapper>
       <Header />
