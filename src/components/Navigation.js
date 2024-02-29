@@ -7,7 +7,7 @@ function Navigation({ routes, type }) {
       <ul>
         {routes.map((route) => {
           return (
-            <li>
+            <li key={route.id}>
               <NavLink to={route.routeLink}>{route.routeName}</NavLink>
             </li>
           );
