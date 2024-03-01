@@ -2,7 +2,7 @@ import concertData from "./scheduleData";
 
 const dayRoutes = concertData.map((event, index) => ({
   id: index,
-  routeLink: `day-${index + 1}`,
+  routeLink: event.day,
   routeName: event.day,
 }));
 
