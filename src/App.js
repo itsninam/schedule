@@ -28,7 +28,7 @@ function App() {
               return (
                 <Route
                   key={day.day}
-                  path={day.day}
+                  path={`/schedule/music/:day`}
                   element={<DayOneSchedule />}
                 />
               );
