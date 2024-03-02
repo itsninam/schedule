@@ -6,11 +6,11 @@ import Navigation from "../components/Navigation";
 
 function FullSchedule() {
   return (
-    <div>
+    <>
       <Navigation routes={dayRoutes} />
 
       <Outlet />
-    </div>
+    </>
   );
 }
 

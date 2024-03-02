@@ -16,7 +16,7 @@ li {
   list-style: none;
 }
 
-ul {
+nav ul {
   display: flex;
   justify-content: center;
   gap: 24px;
@@ -57,4 +57,12 @@ section {
   bottom: 0;
   left: 0;
   width: 100%;
+  background-color: wheat;
+}
+
+.events-list-container h2 {
+  background-color: grey;
+}
+.events-list li {
+  border-bottom: 1px solid black;
 }

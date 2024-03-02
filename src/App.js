@@ -11,7 +11,7 @@ import FullSchedule from "./pages/FullSchedule";
 import MySchedule from "./pages/MySchedule";
 import Wrapper from "./components/Wrapper";
 import Header from "./components/Header";
-import DayOneSchedule from "./pages/DayOneSchedule";
+import DaySchedule from "./pages/DaySchedule";
 
 function App() {
   const { scheduleData, dayOneSchedule } = useSchedule();
@@ -29,7 +29,7 @@ function App() {
                 <Route
                   key={day.day}
                   path={`/schedule/music/:day`}
-                  element={<DayOneSchedule />}
+                  element={<DaySchedule />}
                 />
               );
             })}
