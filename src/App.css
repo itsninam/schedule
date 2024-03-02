@@ -31,10 +31,29 @@ a {
   color: black;
 }
 
-a.active {
+a.active:not(.days-nav a) {
   color: green;
   text-decoration: underline;
   text-underline-offset: 8px;
+}
+
+.days-nav a {
+  display: inline-block;
+  border: 1px solid black;
+  padding: 8px 16px;
+  border-radius: 24px;
+}
+
+.days-nav a.active {
+  color: white;
+  background-color: green;
+  border: 1px solid green;
+  /* text-decoration: underline; */
+  /* text-underline-offset: 8px; */
+}
+
+.days-nav a::first-letter {
+  text-transform: uppercase;
 }
 
 #root {

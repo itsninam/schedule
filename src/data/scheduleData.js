@@ -1,7 +1,7 @@
 const concertData = [
   {
     id: 0,
-    day: "thursday",
+    day: new Date("June 20, 2024"),
     timeSlot: [
       {
         hour: 8,
@@ -37,7 +37,7 @@ const concertData = [
   },
   {
     id: 1,
-    day: "friday",
+    day: new Date("Jun 21, 2024"),
     timeSlot: [
       {
         hour: 8,

@@ -7,7 +7,7 @@ import Navigation from "../components/Navigation";
 function FullSchedule() {
   return (
     <>
-      <Navigation routes={dayRoutes} />
+      <Navigation type="days-nav" routes={dayRoutes} />
 
       <Outlet />
     </>

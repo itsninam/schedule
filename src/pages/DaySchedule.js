@@ -1,13 +1,17 @@
 import React, { Fragment } from "react";
 import { useParams } from "react-router";
 import { useSchedule } from "../contexts/ScheduleContext";
+import formatDate from "../helpers/formatDate";
+
 import ScheduleTimeHeading from "../components/ScheduleTimeHeading";
 import EventList from "./EventList";
 
 function DaySchedule() {
   const { scheduleData } = useSchedule();
   const { day } = useParams();
-  const selectedDay = scheduleData.filter((events) => events.day === day);
+  const selectedDay = scheduleData.filter(
+    (events) => formatDate(events.day, "long") === day
+  );
 
   return (
     <div className="events-list-container">

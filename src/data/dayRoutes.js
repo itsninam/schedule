@@ -1,9 +1,16 @@
 import concertData from "./scheduleData";
+import formatDate from "../helpers/formatDate";
 
-const dayRoutes = concertData.map((event, index) => ({
-  id: index,
-  routeLink: event.day,
-  routeName: event.day,
-}));
+const dayRoutes = concertData.map((event, index) => {
+  return {
+    id: index,
+    routeLink: formatDate(event.day, "long"),
+    routeName: `${formatDate(event.day, "short")}. ${
+      event.day.getMonth() + 1 < 10
+        ? `0${event.day.getMonth() + 1}`
+        : event.day.getMonth() + 1
+    }/${event.day.getDate()} `,
+  };
+});
 
 export default dayRoutes;

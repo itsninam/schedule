@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import concertData from "../data/scheduleData";
-import { useLocation } from "react-router";
+import formatDate from "../helpers/formatDate";
 
 const ScheduleContext = createContext();
 
@@ -11,7 +11,7 @@ function ScheduleProvider({ children }) {
     setScheduleData(concertData);
   }, []);
 
-  const dayOneSchedule = concertData[0].day;
+  const dayOneSchedule = formatDate(concertData[0].day, "long");
 
   return (
     <ScheduleContext.Provider value={{ scheduleData, dayOneSchedule }}>
