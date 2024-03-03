@@ -22,7 +22,7 @@ function DaySchedule() {
               return (
                 <Fragment key={index}>
                   <ScheduleTimeHeading>{slot.hour}</ScheduleTimeHeading>
-                  <EventList slot={slot} />
+                  <EventList slot={slot} day={day} />
                 </Fragment>
               );
             })}
