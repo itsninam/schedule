@@ -14,6 +14,19 @@ function ScheduleProvider({ children }) {
 
   const dayOneSchedule = formatDate(concertData[0].day, "long");
 
+  //sort days in my schedule
+  const myScheduleSortedDays =
+    mySchedule.length > 0
+      ? mySchedule.sort(function (a, b) {
+          return new Date(a.day) - new Date(b.day);
+        })
+      : null;
+
+  const myScheduleDayOne =
+    mySchedule.length > 0
+      ? formatDate(myScheduleSortedDays[0].day, "long")
+      : null;
+
   const handleAddEventToSchedule = (
     selectedDay,
     selectedTimeSlot,
@@ -57,7 +70,13 @@ function ScheduleProvider({ children }) {
 
   return (
     <ScheduleContext.Provider
-      value={{ scheduleData, dayOneSchedule, handleAddEventToSchedule }}
+      value={{
+        scheduleData,
+        dayOneSchedule,
+        handleAddEventToSchedule,
+        myScheduleDayOne,
+        mySchedule,
+      }}
     >
       {children}
     </ScheduleContext.Provider>

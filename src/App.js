@@ -8,13 +8,15 @@ import Lineup from "./pages/Lineup";
 import Schedule from "./pages/Schedule";
 import Navigation from "./components/Navigation";
 import FullSchedule from "./pages/FullSchedule";
-import MySchedule from "./pages/MySchedule";
+import MySchedule from "./pages/my-schedule/MySchedule";
 import Wrapper from "./components/Wrapper";
 import Header from "./components/Header";
 import DaySchedule from "./pages/DaySchedule";
+import MyDaySchedule from "./pages/my-schedule/MyDaySchedule";
 
 function App() {
-  const { scheduleData, dayOneSchedule } = useSchedule();
+  const { dayOneSchedule, myScheduleDayOne } = useSchedule();
+
   return (
     <Wrapper>
       <Header />
@@ -24,17 +26,22 @@ function App() {
           <Route index element={<Navigate to="music" replace />} />
           <Route path="music" element={<FullSchedule />}>
             <Route index element={<Navigate to={dayOneSchedule} replace />} />
-            {scheduleData.map((day) => {
-              return (
-                <Route
-                  key={day.day}
-                  path={`/schedule/music/:day`}
-                  element={<DaySchedule />}
-                />
-              );
-            })}
+            <Route path={`/schedule/music/:day`} element={<DaySchedule />} />
           </Route>
-          <Route path="my-schedule" element={<MySchedule />} />
+          <Route path="my-schedule" element={<MySchedule />}>
+            {myScheduleDayOne !== null && (
+              <>
+                <Route
+                  index
+                  element={<Navigate to={myScheduleDayOne} replace />}
+                />
+                <Route
+                  path={"/schedule/my-schedule/:day"}
+                  element={<MyDaySchedule />}
+                />
+              </>
+            )}
+          </Route>
         </Route>
       </Routes>
       <Navigation routes={homeRoutes} type="bottom-nav" />
