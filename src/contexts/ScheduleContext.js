@@ -1,12 +1,17 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import concertData from "../data/scheduleData";
 import formatDate from "../helpers/formatDate";
+import { useLocation, useNavigate } from "react-router";
 
 const ScheduleContext = createContext();
 
 function ScheduleProvider({ children }) {
   const [scheduleData, setScheduleData] = useState([]);
   const [mySchedule, setMySchedule] = useState([]);
+  const [isEventAddedToSchedule, setIsEventAddedToSchedule] = useState({});
+
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     setScheduleData(concertData);
@@ -26,6 +31,20 @@ function ScheduleProvider({ children }) {
     mySchedule.length > 0
       ? formatDate(myScheduleSortedDays[0].day, "long")
       : null;
+
+  const handleRemoveItem = (selectedEvent) => {
+    if (location.pathname.includes("my-schedule")) {
+      const updatedSchedule = mySchedule.map((schedule) => ({
+        ...schedule,
+        timeSlot: schedule.timeSlot.map((slot) => ({
+          ...slot,
+          events: slot.events.filter((event) => event.title !== selectedEvent),
+        })),
+      }));
+
+      setMySchedule(updatedSchedule);
+    }
+  };
 
   const handleAddEventToSchedule = (
     selectedDay,
@@ -66,6 +85,11 @@ function ScheduleProvider({ children }) {
         },
       ]);
     }
+
+    setIsEventAddedToSchedule({
+      ...isEventAddedToSchedule,
+      [selectedEvent.title]: !isEventAddedToSchedule[selectedEvent.title],
+    });
   };
 
   return (
@@ -76,6 +100,8 @@ function ScheduleProvider({ children }) {
         handleAddEventToSchedule,
         myScheduleDayOne,
         mySchedule,
+        isEventAddedToSchedule,
+        handleRemoveItem,
       }}
     >
       {children}

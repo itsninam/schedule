@@ -20,7 +20,9 @@ function MyDaySchedule() {
             {day.timeSlot.map((slot, index) => {
               return (
                 <Fragment key={index}>
-                  <ScheduleTimeHeading>{slot.hour}</ScheduleTimeHeading>
+                  {slot.events.length > 0 && (
+                    <ScheduleTimeHeading>{slot.hour}</ScheduleTimeHeading>
+                  )}
                   <EventList slot={slot} day={day} />
                 </Fragment>
               );
