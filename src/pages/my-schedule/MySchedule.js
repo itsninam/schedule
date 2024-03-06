@@ -1,34 +1,19 @@
 import React from "react";
-import { useSchedule } from "../../contexts/ScheduleContext";
+// import { useSchedule } from "../../contexts/ScheduleContext";
 import { Outlet } from "react-router";
-import formatDate from "../../helpers/formatDate";
+// import formatDate from "../../helpers/formatDate";
 
 import Navigation from "../../components/Navigation";
-import EmptySchedule from "./EmptySchedule";
+// import EmptySchedule from "./EmptySchedule";
+import dayRoutes from "../../data/dayRoutes";
 
 function MySchedule() {
-  const { mySchedule } = useSchedule();
-
-  const myScheduleRoutes = mySchedule.map((event, index) => {
-    return {
-      id: index,
-      routeLink: formatDate(event.day, "long"),
-      routeName: `${formatDate(event.day, "short")}. ${
-        event.day.getMonth() + 1 < 10
-          ? `0${event.day.getMonth() + 1}`
-          : event.day.getMonth() + 1
-      }/${event.day.getDate()} `,
-    };
-  });
-
-  return mySchedule.length > 0 ? (
+  return (
     <>
-      <Navigation type="days-nav" routes={myScheduleRoutes} />
+      <Navigation type="days-nav" routes={dayRoutes} />
 
       <Outlet />
     </>
-  ) : (
-    <EmptySchedule />
   );
 }
 

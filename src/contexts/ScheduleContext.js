@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import concertData from "../data/scheduleData";
 import formatDate from "../helpers/formatDate";
-import { useLocation, useNavigate } from "react-router";
+import { useLocation } from "react-router";
 
 const ScheduleContext = createContext();
 
@@ -11,7 +11,6 @@ function ScheduleProvider({ children }) {
   const [isEventAddedToSchedule, setIsEventAddedToSchedule] = useState({});
 
   const location = useLocation();
-  const navigate = useNavigate();
 
   useEffect(() => {
     setScheduleData(concertData);
@@ -19,18 +18,15 @@ function ScheduleProvider({ children }) {
 
   const dayOneSchedule = formatDate(concertData[0].day, "long");
 
-  //sort days in my schedule
-  const myScheduleSortedDays =
-    mySchedule.length > 0
-      ? mySchedule.sort(function (a, b) {
-          return new Date(a.day) - new Date(b.day);
-        })
-      : null;
+  const handleTimeSlotCategories = (selectedDay) => {
+    const category = [
+      ...new Set(
+        selectedDay.flatMap((day) => day.timeSlot).map((day) => day.category)
+      ),
+    ];
 
-  const myScheduleDayOne =
-    mySchedule.length > 0
-      ? formatDate(myScheduleSortedDays[0].day, "long")
-      : null;
+    return category;
+  };
 
   const handleRemoveItem = (selectedEvent) => {
     if (location.pathname.includes("my-schedule")) {
@@ -46,43 +42,31 @@ function ScheduleProvider({ children }) {
     }
   };
 
-  const handleAddEventToSchedule = (
-    selectedDay,
-    selectedTimeSlot,
-    selectedEvent
-  ) => {
+  const handleAddEventToSchedule = (selectedDay, selectedEvent) => {
+    console.log(selectedDay.id, selectedEvent);
+
     const dayExists = mySchedule.find(
-      (scheduledDay) => scheduledDay.day === selectedDay.day
+      (schedule) => schedule.day === selectedDay.day
     );
 
     if (dayExists) {
-      const hourExists = dayExists.timeSlot.find(
-        (hour) => hour.hour === selectedTimeSlot.hour
+      const eventExists = dayExists.timeSlot.find(
+        (event) => event.title === selectedEvent.title
       );
 
-      if (hourExists) {
-        const eventExists = hourExists.events.find(
-          (event) => event.title === selectedEvent.title
+      if (!eventExists) {
+        setMySchedule(
+          mySchedule.map((schedule) =>
+            schedule.day === selectedDay.day
+              ? { ...schedule, timeSlot: [...schedule.timeSlot, selectedEvent] }
+              : schedule
+          )
         );
-
-        if (!eventExists) {
-          hourExists.events.push(selectedEvent);
-        }
-      } else {
-        dayExists.timeSlot.push({
-          hour: selectedTimeSlot.hour,
-          events: [selectedEvent],
-        });
       }
-
-      setMySchedule([...mySchedule]);
     } else {
       setMySchedule([
         ...mySchedule,
-        {
-          day: selectedDay.day,
-          timeSlot: [{ hour: selectedTimeSlot.hour, events: [selectedEvent] }],
-        },
+        { day: selectedDay.day, timeSlot: [selectedEvent] },
       ]);
     }
 
@@ -98,10 +82,10 @@ function ScheduleProvider({ children }) {
         scheduleData,
         dayOneSchedule,
         handleAddEventToSchedule,
-        myScheduleDayOne,
         mySchedule,
         isEventAddedToSchedule,
         handleRemoveItem,
+        handleTimeSlotCategories,
       }}
     >
       {children}

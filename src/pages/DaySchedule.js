@@ -3,26 +3,34 @@ import { useParams } from "react-router";
 import { useSchedule } from "../contexts/ScheduleContext";
 import formatDate from "../helpers/formatDate";
 
-import ScheduleTimeHeading from "../components/ScheduleTimeHeading";
 import EventList from "./EventList";
 
 function DaySchedule() {
-  const { scheduleData } = useSchedule();
+  const { scheduleData, handleTimeSlotCategories } = useSchedule();
   const { day } = useParams();
+
   const selectedDay = scheduleData.filter(
     (events) => formatDate(events.day, "long") === day
   );
 
+  const timeSlotCategories = handleTimeSlotCategories(selectedDay);
+
   return (
     <div className="events-list-container">
-      {selectedDay.map((day, index) => {
+      {selectedDay.map((day) => {
         return (
-          <Fragment key={index}>
-            {day.timeSlot.map((slot, index) => {
+          <Fragment key={day.day}>
+            {timeSlotCategories.map((category, index) => {
               return (
                 <Fragment key={index}>
-                  <ScheduleTimeHeading>{slot.hour}</ScheduleTimeHeading>
-                  <EventList slot={slot} day={day} />
+                  <h2>{category}</h2>
+                  {day.timeSlot
+                    .filter((slot) => slot.category === category)
+                    .map((event) => {
+                      return (
+                        <EventList key={event.title} day={day} event={event} />
+                      );
+                    })}
                 </Fragment>
               );
             })}

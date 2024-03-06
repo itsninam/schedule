@@ -15,7 +15,7 @@ import DaySchedule from "./pages/DaySchedule";
 import MyDaySchedule from "./pages/my-schedule/MyDaySchedule";
 
 function App() {
-  const { dayOneSchedule, myScheduleDayOne } = useSchedule();
+  const { dayOneSchedule } = useSchedule();
 
   return (
     <Wrapper>
@@ -29,18 +29,13 @@ function App() {
             <Route path={`/schedule/music/:day`} element={<DaySchedule />} />
           </Route>
           <Route path="my-schedule" element={<MySchedule />}>
-            {myScheduleDayOne !== null && (
-              <>
-                <Route
-                  index
-                  element={<Navigate to={myScheduleDayOne} replace />}
-                />
-                <Route
-                  path={"/schedule/my-schedule/:day"}
-                  element={<MyDaySchedule />}
-                />
-              </>
-            )}
+            <>
+              <Route index element={<Navigate to={dayOneSchedule} replace />} />
+              <Route
+                path={"/schedule/my-schedule/:day"}
+                element={<MyDaySchedule />}
+              />
+            </>
           </Route>
         </Route>
       </Routes>
