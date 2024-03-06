@@ -1,12 +1,17 @@
 import { useSchedule } from "../contexts/ScheduleContext";
 
 function EventList({ day, event }) {
-  const { handleAddEventToSchedule, isEventAddedToSchedule } = useSchedule();
+  const {
+    handleAddEventToSchedule,
+    isEventAddedToSchedule,
+    handleRemoveEvent,
+  } = useSchedule();
 
   return (
     <li
       onClick={() => {
         handleAddEventToSchedule(day, event);
+        handleRemoveEvent(event);
       }}
     >
       {event.title}

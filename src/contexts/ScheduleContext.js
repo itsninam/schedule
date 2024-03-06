@@ -28,19 +28,20 @@ function ScheduleProvider({ children }) {
     return category;
   };
 
-  const handleRemoveItem = (selectedEvent) => {
+  const handleRemoveEvent = (selectedEvent) => {
     if (location.pathname.includes("my-schedule")) {
       const updatedSchedule = mySchedule.map((schedule) => ({
         ...schedule,
-        timeSlot: schedule.timeSlot.map((slot) => ({
-          ...slot,
-          events: slot.events.filter((event) => event.title !== selectedEvent),
-        })),
+        timeSlot: schedule.timeSlot.filter(
+          (slot) => slot.title !== selectedEvent.title
+        ),
       }));
 
       setMySchedule(updatedSchedule);
     }
   };
+
+  console.log(mySchedule);
 
   const handleAddEventToSchedule = (selectedDay, selectedEvent) => {
     console.log(selectedDay.id, selectedEvent);
@@ -84,7 +85,7 @@ function ScheduleProvider({ children }) {
         handleAddEventToSchedule,
         mySchedule,
         isEventAddedToSchedule,
-        handleRemoveItem,
+        handleRemoveEvent,
         handleTimeSlotCategories,
       }}
     >

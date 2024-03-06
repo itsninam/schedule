@@ -13,7 +13,7 @@ function MyDaySchedule() {
 
   const timeSlotCategories = handleTimeSlotCategories(selectedDay);
 
-  if (!selectedDay.length) {
+  if (!selectedDay.length || !timeSlotCategories.length) {
     return <p>Add events for {day}</p>;
   }
 
