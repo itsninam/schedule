@@ -1,17 +1,16 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import dayRoutes from "../data/dayRoutes";
 
 import Navigation from "../components/Navigation";
 
-function FullSchedule() {
+function ScheduleNavigation({ routes, type }) {
   return (
     <>
-      <Navigation type="days-nav" routes={dayRoutes} />
+      <Navigation type={type} routes={routes} />
 
       <Outlet />
     </>
   );
 }
 
-export default FullSchedule;
+export default ScheduleNavigation;

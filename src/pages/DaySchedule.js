@@ -1,19 +1,34 @@
 import React, { Fragment } from "react";
-import { useParams } from "react-router";
+import { useLocation, useParams } from "react-router";
 import { useSchedule } from "../contexts/ScheduleContext";
 import formatDate from "../helpers/formatDate";
 
-import EventList from "./EventList";
+import EventsList from "./EventsList";
 
 function DaySchedule() {
-  const { scheduleData, handleTimeSlotCategories } = useSchedule();
+  const { scheduleData, mySchedule, handleTimeSlotCategories } = useSchedule();
   const { day } = useParams();
+  const location = useLocation();
 
-  const selectedDay = scheduleData.filter(
-    (events) => formatDate(events.day, "long") === day
-  );
+  const mySchedulePath = location.pathname.includes("my-schedule");
+
+  const getSelectedDay = (selectedDay) => {
+    return selectedDay.filter(
+      (events) => formatDate(events.day, "long") === day
+    );
+  };
+
+  const selectedDay = mySchedulePath
+    ? getSelectedDay(mySchedule)
+    : getSelectedDay(scheduleData);
 
   const timeSlotCategories = handleTimeSlotCategories(selectedDay);
+
+  if (mySchedulePath) {
+    if (!selectedDay.length || !timeSlotCategories.length) {
+      return <p>Add events for {day}</p>;
+    }
+  }
 
   return (
     <div className="events-list-container">
@@ -24,13 +39,7 @@ function DaySchedule() {
               return (
                 <Fragment key={index}>
                   <h2>{category}</h2>
-                  {day.timeSlot
-                    .filter((slot) => slot.category === category)
-                    .map((event) => {
-                      return (
-                        <EventList key={event.title} day={day} event={event} />
-                      );
-                    })}
+                  <EventsList day={day} category={category} />
                 </Fragment>
               );
             })}

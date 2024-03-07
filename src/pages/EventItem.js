@@ -1,6 +1,6 @@
 import { useSchedule } from "../contexts/ScheduleContext";
 
-function EventList({ day, event }) {
+function EventItem({ day, event }) {
   const {
     handleAddEventToSchedule,
     isEventAddedToSchedule,
@@ -20,4 +20,4 @@ function EventList({ day, event }) {
   );
 }
 
-export default EventList;
+export default EventItem;
