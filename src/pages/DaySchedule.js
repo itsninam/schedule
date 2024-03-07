@@ -1,9 +1,10 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { useLocation, useParams } from "react-router";
 import { useSchedule } from "../contexts/ScheduleContext";
 import formatDate from "../helpers/formatDate";
 
-import EventsList from "./EventsList";
+import EmptySchedule from "../components/EmptySchedule";
+import ScheduleContent from "./ScheduleContent";
 
 function DaySchedule() {
   const { scheduleData, mySchedule, handleTimeSlotCategories } = useSchedule();
@@ -26,27 +27,22 @@ function DaySchedule() {
 
   if (mySchedulePath) {
     if (!selectedDay.length || !timeSlotCategories.length) {
-      return <p>Add events for {day}</p>;
+      return <EmptySchedule day={day} />;
     }
   }
 
   return (
-    <div className="events-list-container">
+    <section className="events-list-container">
       {selectedDay.map((day) => {
         return (
-          <Fragment key={day.day}>
-            {timeSlotCategories.map((category, index) => {
-              return (
-                <Fragment key={index}>
-                  <h2>{category}</h2>
-                  <EventsList day={day} category={category} />
-                </Fragment>
-              );
-            })}
-          </Fragment>
+          <ScheduleContent
+            key={day.day}
+            day={day}
+            timeSlotCategories={timeSlotCategories}
+          />
         );
       })}
-    </div>
+    </section>
   );
 }
 
