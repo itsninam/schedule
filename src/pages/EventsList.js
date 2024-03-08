@@ -6,8 +6,10 @@ function EventsList({ day, category }) {
     <ul className="events-list">
       {day.timeSlot
         .filter((slot) => slot.category === category)
-        .map((event) => {
-          return <EventItem key={event.title} day={day} event={event} />;
+        .map((eventItem) => {
+          return (
+            <EventItem key={eventItem.title} day={day} eventItem={eventItem} />
+          );
         })}
     </ul>
   );

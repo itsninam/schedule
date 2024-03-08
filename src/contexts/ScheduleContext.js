@@ -11,6 +11,7 @@ function ScheduleProvider({ children }) {
   const [isEventAddedToSchedule, setIsEventAddedToSchedule] = useState({});
 
   const location = useLocation();
+  const isMySchedulePath = location.pathname.includes("my-schedule");
 
   useEffect(() => {
     setScheduleData(concertData);
@@ -28,8 +29,8 @@ function ScheduleProvider({ children }) {
     return category;
   };
 
-  const handleRemoveEvent = (selectedEvent) => {
-    if (location.pathname.includes("my-schedule")) {
+  const handleRemoveEvent = (selectedEvent, eventItemRef) => {
+    if (isMySchedulePath) {
       const updatedSchedule = mySchedule.map((schedule) => ({
         ...schedule,
         timeSlot: schedule.timeSlot.filter(
@@ -37,15 +38,15 @@ function ScheduleProvider({ children }) {
         ),
       }));
 
-      setMySchedule(updatedSchedule);
+      eventItemRef.current.classList.add("remove-slide-left");
+
+      setTimeout(() => {
+        setMySchedule(updatedSchedule);
+      }, 500);
     }
   };
 
-  console.log(mySchedule);
-
   const handleAddEventToSchedule = (selectedDay, selectedEvent) => {
-    console.log(selectedDay.id, selectedEvent);
-
     const dayExists = mySchedule.find(
       (schedule) => schedule.day === selectedDay.day
     );
@@ -87,6 +88,7 @@ function ScheduleProvider({ children }) {
         isEventAddedToSchedule,
         handleRemoveEvent,
         handleTimeSlotCategories,
+        isMySchedulePath,
       }}
     >
       {children}
