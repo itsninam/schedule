@@ -22,10 +22,14 @@ function ScheduleProvider({ children }) {
   const handleTimeSlotCategories = (selectedDay) => {
     const category = [
       ...new Set(
-        selectedDay.flatMap((day) => day.timeSlot).map((day) => day.category)
+        selectedDay
+          .flatMap((day) => day.timeSlot)
+          .map((day) => day.category)
+          .sort((a, b) => a - b)
       ),
     ];
 
+    console.log(category.sort((a, b) => a - b));
     return category;
   };
 
