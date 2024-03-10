@@ -16,7 +16,9 @@ function EventItem({ day, eventItem }) {
       ref={eventItemRef}
       id={eventItem.title}
       className="event-item"
-      onClick={() => handleAddEventToSchedule(day, eventItem)}
+      onClick={() =>
+        !isMySchedulePath && handleAddEventToSchedule(day, eventItem)
+      }
     >
       <div>
         <h3>{eventItem.title}</h3>

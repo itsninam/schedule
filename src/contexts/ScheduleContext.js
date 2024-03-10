@@ -29,25 +29,34 @@ function ScheduleProvider({ children }) {
       ),
     ];
 
-    console.log(category.sort((a, b) => a - b));
     return category;
   };
 
-  const handleRemoveEvent = (selectedEvent, eventItemRef) => {
-    if (isMySchedulePath) {
-      const updatedSchedule = mySchedule.map((schedule) => ({
-        ...schedule,
-        timeSlot: schedule.timeSlot.filter(
-          (slot) => slot.title !== selectedEvent.title
-        ),
-      }));
+  const filterEvents = (selectedEvent) => {
+    const updatedSchedule = mySchedule.map((schedule) => ({
+      ...schedule,
+      timeSlot: schedule.timeSlot.filter(
+        (slot) => slot.title !== selectedEvent.title
+      ),
+    }));
 
-      eventItemRef.current.classList.add("remove-slide-left");
+    setTimeout(() => {
+      setMySchedule(updatedSchedule);
+    }, 500);
+  };
 
-      setTimeout(() => {
-        setMySchedule(updatedSchedule);
-      }, 500);
-    }
+  const handleSelectCheckmark = (selectedEvent) => {
+    setIsEventAddedToSchedule({
+      ...isEventAddedToSchedule,
+      [selectedEvent.title]: !isEventAddedToSchedule[selectedEvent.title],
+    });
+  };
+
+  const handleRemoveEvent = (selectedEvent, eventItemRef = 0) => {
+    filterEvents(selectedEvent);
+    handleSelectCheckmark(selectedEvent);
+
+    eventItemRef.current.classList.add("remove-slide-left");
   };
 
   const handleAddEventToSchedule = (selectedDay, selectedEvent) => {
@@ -60,7 +69,11 @@ function ScheduleProvider({ children }) {
         (event) => event.title === selectedEvent.title
       );
 
-      if (!eventExists) {
+      if (eventExists) {
+        if (!isMySchedulePath) {
+          filterEvents(selectedEvent);
+        }
+      } else {
         setMySchedule(
           mySchedule.map((schedule) =>
             schedule.day === selectedDay.day
@@ -76,10 +89,7 @@ function ScheduleProvider({ children }) {
       ]);
     }
 
-    setIsEventAddedToSchedule({
-      ...isEventAddedToSchedule,
-      [selectedEvent.title]: !isEventAddedToSchedule[selectedEvent.title],
-    });
+    handleSelectCheckmark(selectedEvent);
   };
 
   return (

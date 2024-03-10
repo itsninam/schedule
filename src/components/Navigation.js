@@ -8,7 +8,10 @@ function Navigation({ routes, type }) {
         {routes.map((route) => {
           return (
             <li key={route.id}>
-              <NavLink to={route.routeLink}>{route.routeName}</NavLink>
+              <NavLink to={route.routeLink}>
+                <span class="material-symbols-outlined">{route.routeIcon}</span>
+                <span>{route.routeName}</span>
+              </NavLink>
             </li>
           );
         })}

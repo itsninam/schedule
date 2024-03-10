@@ -7,10 +7,10 @@ function ScheduleContent({ timeSlotCategories, day }) {
     <Fragment key={day.day}>
       {timeSlotCategories.map((category, index) => {
         return (
-          <Fragment key={index}>
+          <div className="event-container" key={index}>
             <ScheduleTimeHeader timeHeader={category} />
             <EventsList day={day} category={category} />
-          </Fragment>
+          </div>
         );
       })}
     </Fragment>
