@@ -3,7 +3,10 @@ import React from "react";
 function Lineup() {
   return (
     <section>
-      <p>Lineup</p>
+      <img
+        scr="../assets/electric-forest-lineup.jpeg"
+        alt="Electric Forest lineup"
+      />
     </section>
   );
 }

@@ -51,7 +51,6 @@ a {
 .wrapper {
   width: 90%;
   margin: 0 auto;
-  padding: 32px 0px;
 }
 
 section {
@@ -73,7 +72,7 @@ h1 {
   text-align: center;
   background: var(--primary-colour);
   color: var(--low-emphasis-font-colour);
-  padding: 32px 0px;
+  padding: 24px 0px;
 }
 
 h2 {
@@ -84,8 +83,14 @@ h3 {
   font-size: 1.6rem;
 }
 
-section p {
+section p,
+.not-found {
   color: var(--low-emphasis-font-colour);
+}
+
+.not-found {
+  margin-top: 32vh;
+  text-align: center;
 }
 
 /* Navigation */
@@ -162,7 +167,7 @@ a:not(.bottom-nav a) {
 /* Event times */
 
 .events-list-container {
-  height: calc(100vh - 328px);
+  height: calc(100vh - 282px);
   overflow: scroll;
 }
 

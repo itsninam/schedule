@@ -12,6 +12,7 @@ import Lineup from "./pages/Lineup";
 import DaySchedule from "./pages/DaySchedule";
 import scheduleRoutes from "./data/scheduleRoutes";
 import ScheduleNavigation from "./pages/ScheduleNavigation";
+import PageNotFound from "./pages/PageNotFound";
 
 function App() {
   const { dayOneSchedule } = useSchedule();
@@ -56,6 +57,7 @@ function App() {
               </>
             </Route>
           </Route>
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
         <Navigation routes={homeRoutes} type="bottom-nav" />
       </Wrapper>
