@@ -17,7 +17,7 @@ function ScheduleProvider({ children }) {
     setScheduleData(concertData);
   }, []);
 
-  const dayOneSchedule = formatDate(concertData[0].day, "long");
+  const dayOneSchedule = formatDate(concertData[0].festivalData[0].day, "long");
 
   const handleTimeSlotCategories = (selectedDay) => {
     const category = [
@@ -33,11 +33,14 @@ function ScheduleProvider({ children }) {
   };
 
   const filterEvents = (selectedEvent) => {
-    const updatedSchedule = mySchedule.map((schedule) => ({
-      ...schedule,
-      timeSlot: schedule.timeSlot.filter(
-        (slot) => slot.title !== selectedEvent.title
-      ),
+    const updatedSchedule = mySchedule.map((festival) => ({
+      ...festival,
+      festivalData: festival.festivalData.map((day) => ({
+        ...day,
+        timeSlot: day.timeSlot.filter(
+          (slot) => slot.title !== selectedEvent.title
+        ),
+      })),
     }));
 
     setTimeout(() => {
@@ -60,13 +63,15 @@ function ScheduleProvider({ children }) {
   };
 
   const handleAddEventToSchedule = (selectedDay, selectedEvent) => {
-    const dayExists = mySchedule.find(
-      (schedule) => schedule.day === selectedDay.day
+    const dayExists = mySchedule.find((festival) =>
+      festival.festivalData.some(
+        (day) => day.day.toDateString() === selectedDay.day.toDateString()
+      )
     );
 
     if (dayExists) {
-      const eventExists = dayExists.timeSlot.find(
-        (event) => event.title === selectedEvent.title
+      const eventExists = dayExists.festivalData.some((day) =>
+        day.timeSlot.some((event) => event.title === selectedEvent.title)
       );
 
       if (eventExists) {
@@ -75,17 +80,28 @@ function ScheduleProvider({ children }) {
         }
       } else {
         setMySchedule(
-          mySchedule.map((schedule) =>
-            schedule.day === selectedDay.day
-              ? { ...schedule, timeSlot: [...schedule.timeSlot, selectedEvent] }
-              : schedule
-          )
+          mySchedule.map((festival) => ({
+            ...festival,
+            festivalData: festival.festivalData.map((day) =>
+              day.day.toDateString() === selectedDay.day.toDateString()
+                ? { ...day, timeSlot: [...day.timeSlot, selectedEvent] }
+                : day
+            ),
+          }))
         );
       }
     } else {
       setMySchedule([
         ...mySchedule,
-        { day: selectedDay.day, timeSlot: [selectedEvent] },
+        {
+          festivalName: "Electric Forest", // Replace with actual festival name
+          festivalData: [
+            {
+              day: selectedDay.day,
+              timeSlot: [selectedEvent],
+            },
+          ],
+        },
       ]);
     }
 

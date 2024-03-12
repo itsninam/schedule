@@ -57,13 +57,26 @@ section {
   height: 100%;
 }
 
+img {
+  max-width: 100%;
+  max-height: 100%;
+  height: auto;
+}
+
+.image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 162px);
+}
+
 .material-symbols-outlined {
   font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 0, "opsz" 24;
 }
 
 .material-symbols-outlined.checked {
   font-variation-settings: "FILL" 1;
-  color: var(--primary-colour);
+  color: var(--high-emphasis-font-colour);
 }
 
 /* Typography */
@@ -81,6 +94,7 @@ h2 {
 
 h3 {
   font-size: 1.6rem;
+  color: var(--high-emphasis-font-colour);
 }
 
 section p,

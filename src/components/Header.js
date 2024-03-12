@@ -1,7 +1,16 @@
 import React from "react";
+import { useSchedule } from "../contexts/ScheduleContext";
 
 function Header() {
-  return <h1>Festival Name</h1>;
+  const { scheduleData } = useSchedule();
+
+  return (
+    <>
+      {scheduleData.map((data) => {
+        return <h1 key={data.festivalName}>{data.festivalName}</h1>;
+      })}
+    </>
+  );
 }
 
 export default Header;

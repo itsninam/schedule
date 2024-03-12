@@ -16,9 +16,9 @@ function DaySchedule() {
   const { day } = useParams();
 
   const getSelectedDay = (selectedDay) => {
-    return selectedDay.filter(
-      (events) => formatDate(events.day, "long") === day
-    );
+    return selectedDay
+      .flatMap((day) => day.festivalData)
+      .filter((events) => formatDate(events.day, "long") === day);
   };
 
   const selectedDay = isMySchedulePath
