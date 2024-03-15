@@ -13,6 +13,7 @@ import DaySchedule from "./pages/DaySchedule";
 import scheduleRoutes from "./data/scheduleRoutes";
 import ScheduleNavigation from "./pages/ScheduleNavigation";
 import PageNotFound from "./pages/PageNotFound";
+import Home from "./pages/Home";
 
 function App() {
   const { dayOneSchedule, dayRoutes } = useSchedule();
@@ -22,7 +23,8 @@ function App() {
       <Header />
       <Wrapper>
         <Routes>
-          <Route path="/" element={<Lineup />} />
+          <Route path="/" element={<Home />} />
+          <Route path="lineup" element={<Lineup />} />
           <Route
             path="schedule"
             element={
