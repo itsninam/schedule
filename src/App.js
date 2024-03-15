@@ -2,7 +2,7 @@ import "./App.css";
 import { Routes, Route, Navigate } from "react-router";
 import { useSchedule } from "./contexts/ScheduleContext";
 import homeRoutes from "./data/homeRoutes";
-import dayRoutes from "./data/dayRoutes";
+// import dayRoutes from "./data/dayRoutes";
 
 //components
 import Wrapper from "./components/Wrapper";
@@ -15,7 +15,7 @@ import ScheduleNavigation from "./pages/ScheduleNavigation";
 import PageNotFound from "./pages/PageNotFound";
 
 function App() {
-  const { dayOneSchedule } = useSchedule();
+  const { dayOneSchedule, dayRoutes } = useSchedule();
 
   return (
     <>

@@ -1,7 +1,7 @@
 import { useSchedule } from "../contexts/ScheduleContext";
 import { useRef } from "react";
 
-function EventItem({ day, eventItem }) {
+function EventItem({ day, eventItem, selectedDayObj }) {
   const {
     handleAddEventToSchedule,
     isEventAddedToSchedule,
@@ -17,7 +17,8 @@ function EventItem({ day, eventItem }) {
       id={eventItem.title}
       className="event-item"
       onClick={() =>
-        !isMySchedulePath && handleAddEventToSchedule(day, eventItem)
+        !isMySchedulePath &&
+        handleAddEventToSchedule(day, selectedDayObj, eventItem)
       }
     >
       <div>

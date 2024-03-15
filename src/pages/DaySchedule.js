@@ -25,6 +25,10 @@ function DaySchedule() {
     ? getSelectedDay(mySchedule)
     : getSelectedDay(scheduleData);
 
+  const selectedDayObj = isMySchedulePath ? mySchedule : scheduleData;
+      console.log(selectedDayObj);
+
+
   const timeSlotCategories = handleTimeSlotCategories(selectedDay);
 
   if (isMySchedulePath) {
@@ -40,6 +44,7 @@ function DaySchedule() {
           <ScheduleContent
             key={day.day}
             day={day}
+            selectedDayObj={selectedDayObj}
             timeSlotCategories={timeSlotCategories}
           />
         );
