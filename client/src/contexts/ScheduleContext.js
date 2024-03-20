@@ -2,6 +2,7 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import concertData from "../data/scheduleData";
 import formatDate from "../helpers/formatDate";
 import { useLocation } from "react-router";
+import axios from "axios";
 
 const ScheduleContext = createContext();
 
@@ -13,7 +14,17 @@ function ScheduleProvider({ children }) {
   const location = useLocation();
   const isMySchedulePath = location.pathname.includes("my-schedule");
 
+  const fetchData = async () => {
+    try {
+      const response = await axios.get("http://localhost:8000/festival");
+      console.log(response);
+    } catch (error) {
+      console.error("Error fetching profile:", error);
+    }
+  };
+
   useEffect(() => {
+    fetchData();
     setScheduleData(concertData.filter((data) => data.festivalName === "Veld"));
   }, []);
 
