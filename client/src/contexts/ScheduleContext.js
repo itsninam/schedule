@@ -1,8 +1,9 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import concertData from "../data/scheduleData";
 import formatDate from "../helpers/formatDate";
 import { useLocation } from "react-router";
 import axios from "axios";
+import getDayRoutes from "../helpers/getDayRoutes";
+import getTimeSlotCategories from "../helpers/getTimeSlotCategories";
 
 const ScheduleContext = createContext();
 
@@ -14,49 +15,32 @@ function ScheduleProvider({ children }) {
   const location = useLocation();
   const isMySchedulePath = location.pathname.includes("my-schedule");
 
+  const query = "Veld";
+
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/festival");
-      console.log(response);
+      const response = await axios.get(
+        `http://localhost:8000/festival?festivalName=${query}`
+      );
+      setScheduleData(response.data);
     } catch (error) {
-      console.error("Error fetching profile:", error);
+      console.log(error.response.data.message);
     }
   };
 
   useEffect(() => {
     fetchData();
-    setScheduleData(concertData.filter((data) => data.festivalName === "Veld"));
   }, []);
 
-  let dayOneSchedule;
+  const dayRoutes = getDayRoutes(scheduleData);
 
-  if (scheduleData && scheduleData.length > 0) {
-    dayOneSchedule = formatDate(scheduleData[0].festivalData[0].day, "long");
-  }
-
-  const dayRoutes = scheduleData
-    .flatMap((data) => data.festivalData)
-    .map((event, index) => {
-      return {
-        id: index,
-        routeLink: formatDate(event.day, "long"),
-        routeName: `${formatDate(event.day, "short")}. ${
-          event.day.getMonth() + 1 < 10
-            ? `0${event.day.getMonth() + 1}`
-            : event.day.getMonth() + 1
-        }/${event.day.getDate()} `,
-      };
-    });
+  const dayOneSchedule =
+    scheduleData &&
+    scheduleData.length > 0 &&
+    formatDate(scheduleData[0].festivalData[0].day, "long");
 
   const handleTimeSlotCategories = (selectedDay) => {
-    const category = [
-      ...new Set(
-        selectedDay
-          .flatMap((day) => day.timeSlot)
-          .map((day) => day.category)
-          .sort((a, b) => a - b)
-      ),
-    ];
+    const category = getTimeSlotCategories(selectedDay);
 
     return category;
   };

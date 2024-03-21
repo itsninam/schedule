@@ -1,5 +1,6 @@
 const formatDate = (date, length) => {
-  return date
+  const newDate = new Date(date);
+  return newDate
     .toLocaleDateString("en-US", {
       weekday: length,
     })

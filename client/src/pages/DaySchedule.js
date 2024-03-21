@@ -1,10 +1,10 @@
 import React from "react";
 import { useParams } from "react-router";
 import { useSchedule } from "../contexts/ScheduleContext";
-import formatDate from "../helpers/formatDate";
 
 import EmptySchedule from "../components/EmptySchedule";
 import ScheduleContent from "./ScheduleContent";
+import getSelectedDay from "../helpers/getSelectedDay";
 
 function DaySchedule() {
   const {
@@ -15,19 +15,11 @@ function DaySchedule() {
   } = useSchedule();
   const { day } = useParams();
 
-  const getSelectedDay = (selectedDay) => {
-    return selectedDay
-      .flatMap((day) => day.festivalData)
-      .filter((events) => formatDate(events.day, "long") === day);
-  };
-
   const selectedDay = isMySchedulePath
-    ? getSelectedDay(mySchedule)
-    : getSelectedDay(scheduleData);
+    ? getSelectedDay(mySchedule, day)
+    : getSelectedDay(scheduleData, day);
 
   const selectedDayObj = isMySchedulePath ? mySchedule : scheduleData;
-      console.log(selectedDayObj);
-
 
   const timeSlotCategories = handleTimeSlotCategories(selectedDay);
 

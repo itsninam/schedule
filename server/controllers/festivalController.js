@@ -6,11 +6,23 @@ const test = (req, res) => {
 
 const getFestival = async (req, res) => {
   try {
-    const festival = await FestivalModel.find({});
-    res.send(festival);
+    const { festivalName } = req.query;
+
+    let query = { festivalName: { $regex: festivalName, $options: "i" } };
+    const festivals = await FestivalModel.find(query);
+
+    if (!festivals || festivals.length === 0) {
+      return res.status(404).json({ message: "No festivals found." });
+    }
+
+    if (!festivalName) {
+      return res.status(400).json({ message: "Please enter a festival name." });
+    }
+
+    res.status(200).json(festivals);
   } catch (err) {
-    res.send(err);
-    console.log(err);
+    res.status(400).json({ message: "Error fetching festivals" });
+    res.status(500).json({ message: "Internal server error." });
   }
 };
 
