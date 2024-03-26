@@ -1,8 +1,13 @@
 import React from "react";
 import { useSchedule } from "../contexts/ScheduleContext";
+import Loading from "../components/Loading";
 
 function Lineup() {
-  const { scheduleData } = useSchedule();
+  const { scheduleData, isLoading } = useSchedule();
+
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <section className="image-container">
       {scheduleData.map((data) => {

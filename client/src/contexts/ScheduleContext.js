@@ -22,21 +22,10 @@ function ScheduleProvider({ children }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(event);
-
-    if (userInput.trim() === "") {
-      setErrorMessage("Please enter festival name");
-      return; // Don't proceed further if the query is empty
-    }
 
     fetchData();
+    setUserInput("");
   };
-
-  useEffect(() => {
-    if (scheduleData.length > 0) {
-      navigate("/lineup");
-    }
-  }, [navigate, scheduleData]);
 
   const fetchData = async () => {
     setIsLoading(true);
@@ -44,9 +33,12 @@ function ScheduleProvider({ children }) {
       const response = await axios.get(
         `http://localhost:8000/festival?festivalName=${userInput}`
       );
+      setErrorMessage("");
+      navigate("/lineup");
       setScheduleData(response.data);
       setIsLoading(false);
     } catch (error) {
+      console.log(error);
       setErrorMessage(error.response.data.message);
     }
   };
