@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import formatDate from "../helpers/formatDate";
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import axios from "axios";
 import getDayRoutes from "../helpers/getDayRoutes";
 import getTimeSlotCategories from "../helpers/getTimeSlotCategories";
@@ -11,26 +11,45 @@ function ScheduleProvider({ children }) {
   const [scheduleData, setScheduleData] = useState([]);
   const [mySchedule, setMySchedule] = useState([]);
   const [isEventAddedToSchedule, setIsEventAddedToSchedule] = useState({});
+  const [userInput, setUserInput] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const location = useLocation();
+  const navigate = useNavigate();
+
   const isMySchedulePath = location.pathname.includes("my-schedule");
 
-  const query = "Veld";
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log(event);
 
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(
-        `http://localhost:8000/festival?festivalName=${query}`
-      );
-      setScheduleData(response.data);
-    } catch (error) {
-      console.log(error.response.data.message);
+    if (userInput.trim() === "") {
+      setErrorMessage("Please enter festival name");
+      return; // Don't proceed further if the query is empty
     }
+
+    fetchData();
   };
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    if (scheduleData.length > 0) {
+      navigate("/lineup");
+    }
+  }, [navigate, scheduleData]);
+
+  const fetchData = async () => {
+    setIsLoading(true);
+    try {
+      const response = await axios.get(
+        `http://localhost:8000/festival?festivalName=${userInput}`
+      );
+      setScheduleData(response.data);
+      setIsLoading(false);
+    } catch (error) {
+      setErrorMessage(error.response.data.message);
+    }
+  };
 
   const dayRoutes = getDayRoutes(scheduleData);
 
@@ -139,6 +158,12 @@ function ScheduleProvider({ children }) {
         handleTimeSlotCategories,
         isMySchedulePath,
         dayRoutes,
+        userInput,
+        setUserInput,
+        handleSubmit,
+        isLoading,
+        setIsLoading,
+        errorMessage,
       }}
     >
       {children}

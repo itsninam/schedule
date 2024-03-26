@@ -10,7 +10,7 @@ function Lineup() {
           <img
             key={data.festivalImage}
             src={data.festivalImage}
-            alt="Electric Forest lineup"
+            alt={data.festivalName}
           />
         );
       })}
