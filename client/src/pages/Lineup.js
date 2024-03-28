@@ -1,9 +1,9 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { useSchedule } from "../contexts/ScheduleContext";
 import Loading from "../components/Loading";
 
 function Lineup() {
-  const { scheduleData, isLoading } = useSchedule();
+  const { scheduleData, isLoading, addMyFestival } = useSchedule();
 
   if (isLoading) {
     return <Loading />;
@@ -12,11 +12,10 @@ function Lineup() {
     <section className="image-container">
       {scheduleData.map((data) => {
         return (
-          <img
-            key={data.festivalImage}
-            src={data.festivalImage}
-            alt={data.festivalName}
-          />
+          <Fragment key={data._id}>
+            <img src={data.festivalImage} alt={data.festivalName} />
+            <button onClick={() => addMyFestival(data)}>Add Festival</button>
+          </Fragment>
         );
       })}
     </section>

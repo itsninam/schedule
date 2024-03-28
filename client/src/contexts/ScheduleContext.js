@@ -10,6 +10,8 @@ const ScheduleContext = createContext();
 function ScheduleProvider({ children }) {
   const [scheduleData, setScheduleData] = useState([]);
   const [mySchedule, setMySchedule] = useState([]);
+  const [myFestivals, setMyFestivals] = useState([]);
+  const [selectedFestival, setSelectedFestival] = useState([]);
   const [isEventAddedToSchedule, setIsEventAddedToSchedule] = useState({});
   const [userInput, setUserInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -43,12 +45,12 @@ function ScheduleProvider({ children }) {
     }
   };
 
-  const dayRoutes = getDayRoutes(scheduleData);
+  const dayRoutes = getDayRoutes(selectedFestival);
 
   const dayOneSchedule =
-    scheduleData &&
-    scheduleData.length > 0 &&
-    formatDate(scheduleData[0].festivalData[0].day, "long");
+    selectedFestival &&
+    selectedFestival.length > 0 &&
+    formatDate(selectedFestival[0].festivalData[0].day, "long");
 
   const handleTimeSlotCategories = (selectedDay) => {
     const category = getTimeSlotCategories(selectedDay);
@@ -138,6 +140,23 @@ function ScheduleProvider({ children }) {
     handleSelectCheckmark(selectedEvent);
   };
 
+  const addMyFestival = (data) => {
+    const festivalExists = myFestivals.some(
+      (festival) => festival._id === data._id
+    );
+
+    if (!festivalExists) {
+      setMyFestivals([...myFestivals, data]);
+    }
+  };
+
+  const handleSelectFestival = (festivalSelection) => {
+    setSelectedFestival(
+      myFestivals.filter((festival) => festival._id === festivalSelection._id)
+    );
+    navigate("/schedule");
+  };
+
   return (
     <ScheduleContext.Provider
       value={{
@@ -156,6 +175,10 @@ function ScheduleProvider({ children }) {
         isLoading,
         setIsLoading,
         errorMessage,
+        addMyFestival,
+        myFestivals,
+        handleSelectFestival,
+        selectedFestival,
       }}
     >
       {children}

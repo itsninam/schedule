@@ -12,14 +12,15 @@ function DaySchedule() {
     mySchedule,
     handleTimeSlotCategories,
     isMySchedulePath,
+    selectedFestival,
   } = useSchedule();
   const { day } = useParams();
 
   const selectedDay = isMySchedulePath
     ? getSelectedDay(mySchedule, day)
-    : getSelectedDay(scheduleData, day);
+    : getSelectedDay(selectedFestival, day);
 
-  const selectedDayObj = isMySchedulePath ? mySchedule : scheduleData;
+  const selectedDayObj = isMySchedulePath ? mySchedule : selectedFestival;
 
   const timeSlotCategories = handleTimeSlotCategories(selectedDay);
 

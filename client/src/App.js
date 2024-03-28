@@ -13,6 +13,7 @@ import DaySchedule from "./pages/DaySchedule";
 import ScheduleNavigation from "./pages/ScheduleNavigation";
 import PageNotFound from "./pages/PageNotFound";
 import Home from "./pages/Home";
+import MyFestivals from "./pages/MyFestivals";
 import NoFestivals from "./components/NoFestivals";
 
 function App() {
@@ -41,6 +42,10 @@ function App() {
           >
             <Route index element={<Navigate to="music" replace />} />
             <Route
+              path="lineup"
+              element={scheduleData.length === 0 ? <NoFestivals /> : <Lineup />}
+            />
+            <Route
               path="music"
               element={
                 <ScheduleNavigation routes={dayRoutes} type="days-nav" />
@@ -67,6 +72,7 @@ function App() {
               </>
             </Route>
           </Route>
+          <Route path="my-festivals" element={<MyFestivals />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
         <Navigation routes={homeRoutes} type="bottom-nav" />
