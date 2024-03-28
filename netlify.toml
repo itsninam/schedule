@@ -1,2 +1,2 @@
-command = "cd client && npm run build"
-publish = "client/build" 
+command = "npm --prefix client run build"
+publish = "client/build"
