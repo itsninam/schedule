@@ -9,9 +9,12 @@ function Navigation({ routes, type }) {
           return (
             <li key={route.id}>
               <NavLink to={route.routeLink}>
-                <span className="material-symbols-outlined">
-                  {route.routeIcon}
-                </span>
+                {type === "bottom-nav" && (
+                  <span className="material-symbols-outlined">
+                    {route.routeIcon}
+                  </span>
+                )}
+
                 <span>{route.routeName}</span>
               </NavLink>
             </li>

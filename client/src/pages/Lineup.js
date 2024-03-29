@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 import { useSchedule } from "../contexts/ScheduleContext";
 import Loading from "../components/Loading";
+import Button from "../components/Button";
 
 function Lineup() {
   const { scheduleData, isLoading, addMyFestival } = useSchedule();
@@ -14,7 +15,11 @@ function Lineup() {
         return (
           <Fragment key={data._id}>
             <img src={data.festivalImage} alt={data.festivalName} />
-            <button onClick={() => addMyFestival(data)}>Add Festival</button>
+            <Button
+              onClick={() => addMyFestival(data)}
+              type="primary"
+              text="Add Festival"
+            ></Button>
           </Fragment>
         );
       })}
