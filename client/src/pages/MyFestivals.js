@@ -1,17 +1,14 @@
 import React from "react";
 import { useSchedule } from "../contexts/ScheduleContext";
 import { useNavigate } from "react-router";
+import Festival from "../components/Festival";
 
 function MyFestivals() {
-  const { myFestivals, handleSelectFestival } = useSchedule();
+  const { myFestivals } = useSchedule();
   return (
-    <ul>
+    <ul className="festival-list">
       {myFestivals.map((festival) => {
-        return (
-          <li key={festival._id} onClick={() => handleSelectFestival(festival)}>
-            {festival.festivalName}
-          </li>
-        );
+        return <Festival festival={festival} key={festival._id} />;
       })}
     </ul>
   );

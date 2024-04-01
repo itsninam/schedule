@@ -67,6 +67,7 @@ button {
   padding: 8px 16px;
   border: none;
   border-radius: 4px;
+  cursor: pointer;
 }
 
 button.primary {
@@ -75,21 +76,27 @@ button.primary {
 }
 
 .image-container {
-  height: calc(100vh - 162px);
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   gap: 16px;
+  margin-top: 16px;
+}
+
+.image-container img {
+  height: calc(100vh - 237px);
 }
 
 .material-symbols-outlined {
   font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 0, "opsz" 24;
+  cursor: pointer;
 }
 
 .material-symbols-outlined.checked {
   font-variation-settings: "FILL" 1;
   color: var(--high-emphasis-font-colour);
+  cursor: pointer;
 }
 
 /* Typography */
@@ -101,7 +108,7 @@ h1 {
   padding: 24px 0px;
 }
 
-h2 {
+.time-header {
   margin-bottom: 12px;
 }
 
@@ -245,4 +252,38 @@ a:not(.bottom-nav a) {
 .remove-slide-left {
   transform: translateX(-200%);
   transition: transform 0.3s ease-in-out;
+}
+
+/* festival list */
+
+.festival-list li {
+  background-color: white;
+  padding: 16px;
+  margin: 8px 0px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 1rem;
+}
+
+.festival-list h2 {
+  font-size: 1.6rem;
+}
+
+.festival-list li img {
+  height: 50px;
+  width: 80px;
+  object-fit: contain;
+}
+
+.festival-list .icons-container {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.festival-list .schedule-icon {
+  color: var(--accent-font-colour);
 }

@@ -4,6 +4,9 @@ const { Schema } = mongoose;
 const festivalSchema = new Schema({
   festivalName: String,
   festivalImage: String,
+  festivalDates: String,
+  festivalLocation: String,
+  festivalThumbnail: String,
   festivalData: [
     {
       day: String,
