@@ -8,7 +8,6 @@ import getSelectedDay from "../helpers/getSelectedDay";
 
 function DaySchedule() {
   const {
-    scheduleData,
     mySchedule,
     handleTimeSlotCategories,
     isMySchedulePath,

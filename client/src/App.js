@@ -17,7 +17,8 @@ import MyFestivals from "./pages/MyFestivals";
 import NoFestivals from "./components/NoFestivals";
 
 function App() {
-  const { dayOneSchedule, dayRoutes, scheduleData } = useSchedule();
+  const { dayOneSchedule, dayRoutes, scheduleData, selectedFestId } =
+    useSchedule();
 
   return (
     <>
@@ -42,10 +43,6 @@ function App() {
           >
             <Route index element={<Navigate to="music" replace />} />
             <Route
-              path="lineup"
-              element={scheduleData.length === 0 ? <NoFestivals /> : <Lineup />}
-            />
-            <Route
               path="music"
               element={
                 <ScheduleNavigation routes={dayRoutes} type="days-nav" />
@@ -68,6 +65,18 @@ function App() {
                 <Route
                   path={"/schedule/my-schedule/:day"}
                   element={<DaySchedule />}
+                />
+              </>
+            </Route>
+            <Route path="lineup">
+              <>
+                <Route
+                  index
+                  element={<Navigate to={selectedFestId} replace />}
+                />
+                <Route
+                  path={"/schedule/lineup/:festival"}
+                  element={<Lineup />}
                 />
               </>
             </Route>

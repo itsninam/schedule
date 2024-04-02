@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useState } from "react";
 import formatDate from "../helpers/formatDate";
 import { useLocation, useNavigate } from "react-router";
 import axios from "axios";
@@ -157,6 +157,8 @@ function ScheduleProvider({ children }) {
     navigate("/schedule");
   };
 
+  const selectedFestId = selectedFestival.find((festival) => festival._id)?._id;
+
   return (
     <ScheduleContext.Provider
       value={{
@@ -179,6 +181,7 @@ function ScheduleProvider({ children }) {
         myFestivals,
         handleSelectFestival,
         selectedFestival,
+        selectedFestId,
       }}
     >
       {children}
