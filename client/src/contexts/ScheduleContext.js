@@ -159,6 +159,14 @@ function ScheduleProvider({ children }) {
 
   const selectedFestId = selectedFestival.find((festival) => festival._id)?._id;
 
+  const handleRemoveFestival = (festival) => {
+    console.log(festival._id);
+    const filteredFestivals = myFestivals.filter(
+      (fest) => fest._id !== festival._id
+    );
+    setMyFestivals(filteredFestivals);
+  };
+
   return (
     <ScheduleContext.Provider
       value={{
@@ -182,6 +190,7 @@ function ScheduleProvider({ children }) {
         handleSelectFestival,
         selectedFestival,
         selectedFestId,
+        handleRemoveFestival,
       }}
     >
       {children}

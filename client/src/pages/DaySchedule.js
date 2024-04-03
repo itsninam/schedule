@@ -2,9 +2,10 @@ import React from "react";
 import { useParams } from "react-router";
 import { useSchedule } from "../contexts/ScheduleContext";
 
-import EmptySchedule from "../components/EmptySchedule";
+import EmptyView from "../components/EmptyView";
 import ScheduleContent from "./ScheduleContent";
 import getSelectedDay from "../helpers/getSelectedDay";
+import svg from "../assets/error-in-calendar.svg";
 
 function DaySchedule() {
   const {
@@ -25,7 +26,13 @@ function DaySchedule() {
 
   if (isMySchedulePath) {
     if (!selectedDay.length || !timeSlotCategories.length) {
-      return <EmptySchedule day={day} />;
+      return (
+        <EmptyView
+          image={svg}
+          header="Empty Schedule!"
+          message={`Add events to your ${day} schedule`}
+        />
+      );
     }
   }
 

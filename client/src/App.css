@@ -99,6 +99,15 @@ button.primary {
   cursor: pointer;
 }
 
+.sr-only {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  top: auto;
+  overflow: hidden;
+}
+
 /* Typography */
 
 h1 {
@@ -256,6 +265,10 @@ a:not(.bottom-nav a) {
 
 /* festival list */
 
+.festival-list {
+  margin-top: 40px;
+}
+
 .festival-list li {
   background-color: white;
   padding: 16px;
@@ -286,4 +299,43 @@ a:not(.bottom-nav a) {
 
 .festival-list .schedule-icon {
   color: var(--accent-font-colour);
+}
+
+/* empty view */
+.empty-view {
+  text-align: center;
+}
+
+.empty-view h3 {
+  color: var(--low-emphasis-font-colour);
+}
+
+.full-page {
+  height: calc(100vh - 160px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+input {
+  padding: 16px;
+  border-radius: 32px;
+  width: 100%;
+  box-sizing: border-box;
+  position: relative;
+  text-indent: 38px;
+}
+
+form {
+  position: relative;
+}
+
+form::after {
+  content: "search";
+  font-family: "Material Symbols Outlined";
+  left: 16px;
+  top: 11px;
+  font-size: 24px;
+  position: absolute;
+  margin: 0px 8px;
 }
