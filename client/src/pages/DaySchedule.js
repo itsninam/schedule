@@ -28,6 +28,7 @@ function DaySchedule() {
     if (!selectedDay.length || !timeSlotCategories.length) {
       return (
         <EmptyView
+          type=""
           image={svg}
           header="Empty Schedule!"
           message={`Add events to your ${day} schedule`}

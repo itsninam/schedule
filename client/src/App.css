@@ -18,11 +18,14 @@ html {
   font-size: 62.5%;
 }
 
+#root {
+  background-color: var(--background-colour);
+}
+
 body {
   font-family: "Inter", sans-serif;
   font-size: 1.6rem;
   color: var(--high-emphasis-font-colour-colour);
-  background-color: var(--background-colour);
 }
 
 p,
@@ -338,4 +341,20 @@ form::after {
   font-size: 24px;
   position: absolute;
   margin: 0px 8px;
+}
+
+/* media queries */
+
+@media screen and (min-width: 569px) {
+  #root {
+    width: 569px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .bottom-nav {
+    position: absolute;
+    width: 569px;
+    bottom: 0px;
+  }
 }
