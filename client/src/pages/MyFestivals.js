@@ -1,13 +1,14 @@
 import React from "react";
+import { useEffect } from "react";
 import { useSchedule } from "../contexts/ScheduleContext";
 import Festival from "../components/Festival";
 import EmptyView from "../components/EmptyView";
 import svg from "../assets/page-lost.svg";
 
 function MyFestivals() {
-  const { myFestivals } = useSchedule();
+  const { myFestival } = useSchedule();
 
-  if (myFestivals.length === 0) {
+  if (myFestival.length === 0) {
     return (
       <EmptyView
         header="No festivals!"
@@ -20,7 +21,7 @@ function MyFestivals() {
 
   return (
     <ul className="festival-list">
-      {myFestivals.map((festival) => {
+      {myFestival.map((festival) => {
         return <Festival festival={festival} key={festival._id} />;
       })}
     </ul>

@@ -17,8 +17,15 @@ import MyFestivals from "./pages/MyFestivals";
 import NoFestivals from "./components/NoFestivals";
 
 function App() {
-  const { dayOneSchedule, dayRoutes, scheduleData, selectedFestId } =
-    useSchedule();
+  const {
+    dayOneSchedule,
+    dayRoutes,
+    scheduleData,
+    selectedFestId,
+    myFestival,
+  } = useSchedule();
+
+  const scheduleRoute = scheduleRoutes(selectedFestId);
 
   return (
     <>
@@ -34,22 +41,25 @@ function App() {
           <Route
             path="schedule"
             element={
-              scheduleData.length === 0 ? (
+              myFestival.length === 0 ? (
                 <NoFestivals />
               ) : (
-                <ScheduleNavigation routes={scheduleRoutes} type="top-nav" />
+                <ScheduleNavigation routes={scheduleRoute} type="top-nav" />
               )
             }
           >
-            <Route index element={<Navigate to="music" replace />} />
+            <Route index element={<Navigate to={selectedFestId} replace />} />
             <Route
-              path="music"
+              path={selectedFestId}
               element={
                 <ScheduleNavigation routes={dayRoutes} type="days-nav" />
               }
             >
               <Route index element={<Navigate to={dayOneSchedule} replace />} />
-              <Route path={`/schedule/music/:day`} element={<DaySchedule />} />
+              <Route
+                path={`/schedule/${selectedFestId}/:day`}
+                element={<DaySchedule />}
+              />
             </Route>
             <Route
               path="my-schedule"

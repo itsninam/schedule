@@ -1,5 +1,4 @@
 const getTimeSlotCategories = (selectedDay) => {
-  console.log(selectedDay, "day");
   return [
     ...new Set(
       selectedDay

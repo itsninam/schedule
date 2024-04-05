@@ -14,7 +14,7 @@ function DaySchedule() {
     isMySchedulePath,
     selectedFestival,
   } = useSchedule();
-  const { day } = useParams();
+  const { day, id } = useParams();
 
   const selectedDay = isMySchedulePath
     ? getSelectedDay(mySchedule, day)

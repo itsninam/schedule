@@ -1,7 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const cors = require("cors");
-const { test, getFestival } = require("../controllers/festivalController");
+const {
+  getFestival,
+  getMyFestival,
+  addMyFestival,
+} = require("../controllers/festivalController");
 
 // middleware
 router.use(
@@ -13,5 +17,7 @@ router.use(
 
 // router.get("/", test);
 router.get("/festival", getFestival);
+router.get("/myFestival", getMyFestival);
+router.post("/addMyFestival", addMyFestival);
 
 module.exports = router;

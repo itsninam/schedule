@@ -1,7 +1,7 @@
-const scheduleRoutes = [
+const scheduleRoutes = (selectedFestId) => [
   {
     id: 0,
-    routeLink: "music",
+    routeLink: selectedFestId,
     routeName: "Schedule",
   },
   {

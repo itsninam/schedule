@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 import formatDate from "../helpers/formatDate";
 import { useLocation, useNavigate } from "react-router";
 import axios from "axios";
@@ -10,7 +10,7 @@ const ScheduleContext = createContext();
 function ScheduleProvider({ children }) {
   const [scheduleData, setScheduleData] = useState([]);
   const [mySchedule, setMySchedule] = useState([]);
-  const [myFestivals, setMyFestivals] = useState([]);
+  const [myFestival, setMyFestival] = useState([]);
   const [selectedFestival, setSelectedFestival] = useState([]);
   const [isEventAddedToSchedule, setIsEventAddedToSchedule] = useState({});
   const [userInput, setUserInput] = useState("");
@@ -21,6 +21,11 @@ function ScheduleProvider({ children }) {
   const navigate = useNavigate();
 
   const isMySchedulePath = location.pathname.includes("my-schedule");
+  const selectedFestId = selectedFestival.find((festival) => festival._id)?._id;
+
+  useEffect(() => {
+    fetchMyFestival();
+  }, []);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -39,6 +44,20 @@ function ScheduleProvider({ children }) {
       navigate("/lineup");
       setScheduleData(response.data);
       setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+      setErrorMessage(error.response.data.message);
+    }
+  };
+
+  const fetchMyFestival = async () => {
+    setIsLoading(true);
+
+    try {
+      const response = await axios.get("http://localhost:8000/myFestival");
+      setErrorMessage("");
+      setIsLoading(false);
+      setMyFestival(response.data);
     } catch (error) {
       console.log(error);
       setErrorMessage(error.response.data.message);
@@ -141,30 +160,43 @@ function ScheduleProvider({ children }) {
   };
 
   const addMyFestival = (data) => {
-    const festivalExists = myFestivals.some(
+    const festivalExists = myFestival.some(
       (festival) => festival._id === data._id
     );
 
     if (!festivalExists) {
-      setMyFestivals([...myFestivals, data]);
+      // setMyFestival([...myFestival, data]);
     }
+
+    const newFestival = {
+      festivalName: data.festivalName,
+      festivalImage: data.festivalImage,
+      festivalDates: data.festivalDates,
+      festivalLocation: data.festivalLocation,
+      festivalThumbnail: data.festivalThumbnail,
+      festivalData: data.festivalData,
+    };
+
+    axios
+      .post("http://localhost:8000/addMyFestival", newFestival)
+      .then((response) => {
+        console.log("festival created");
+      });
   };
 
   const handleSelectFestival = (festivalSelection) => {
     setSelectedFestival(
-      myFestivals.filter((festival) => festival._id === festivalSelection._id)
+      myFestival.filter((festival) => festival._id === festivalSelection._id)
     );
+
     navigate("/schedule");
   };
 
-  const selectedFestId = selectedFestival.find((festival) => festival._id)?._id;
-
   const handleRemoveFestival = (festival) => {
-    console.log(festival._id);
-    const filteredFestivals = myFestivals.filter(
+    const filteredFestivals = myFestival.filter(
       (fest) => fest._id !== festival._id
     );
-    setMyFestivals(filteredFestivals);
+    setMyFestival(filteredFestivals);
   };
 
   return (
@@ -186,11 +218,12 @@ function ScheduleProvider({ children }) {
         setIsLoading,
         errorMessage,
         addMyFestival,
-        myFestivals,
+        myFestival,
         handleSelectFestival,
         selectedFestival,
         selectedFestId,
         handleRemoveFestival,
+        fetchMyFestival,
       }}
     >
       {children}
