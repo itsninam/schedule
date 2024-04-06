@@ -26,6 +26,7 @@ function App() {
   } = useSchedule();
 
   const scheduleRoute = scheduleRoutes(selectedFestId);
+  console.log(dayOneSchedule, "sched");
 
   return (
     <>
@@ -50,16 +51,13 @@ function App() {
           >
             <Route index element={<Navigate to={selectedFestId} replace />} />
             <Route
-              path={selectedFestId}
+              path=":selectedFestId"
               element={
                 <ScheduleNavigation routes={dayRoutes} type="days-nav" />
               }
             >
               <Route index element={<Navigate to={dayOneSchedule} replace />} />
-              <Route
-                path={`/schedule/${selectedFestId}/:day`}
-                element={<DaySchedule />}
-              />
+              <Route path=":day" element={<DaySchedule />} />
             </Route>
             <Route
               path="my-schedule"
@@ -84,10 +82,7 @@ function App() {
                   index
                   element={<Navigate to={selectedFestId} replace />}
                 />
-                <Route
-                  path={"/schedule/lineup/:festival"}
-                  element={<Lineup />}
-                />
+                <Route path=":festival" element={<Lineup />} />
               </>
             </Route>
           </Route>

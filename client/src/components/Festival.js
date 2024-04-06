@@ -1,8 +1,17 @@
 import React from "react";
 import { useSchedule } from "../contexts/ScheduleContext";
+import { useNavigate } from "react-router-dom";
 
 function Festival({ festival }) {
   const { handleSelectFestival, handleRemoveFestival } = useSchedule();
+
+  const navigate = useNavigate();
+
+  const onHandleSelectFestival = (id) => {
+    handleSelectFestival(id);
+    navigate("/schedule");
+  };
+
   return (
     <li>
       <img src={festival.festivalThumbnail} alt={festival.festivalName} />
@@ -21,7 +30,7 @@ function Festival({ festival }) {
         </span>
         <span
           className="material-symbols-outlined schedule-icon"
-          onClick={() => handleSelectFestival(festival)}
+          onClick={() => onHandleSelectFestival(festival._id)}
         >
           event_upcoming
         </span>

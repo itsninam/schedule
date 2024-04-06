@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router";
 import { useSchedule } from "../contexts/ScheduleContext";
 
@@ -13,8 +13,13 @@ function DaySchedule() {
     handleTimeSlotCategories,
     isMySchedulePath,
     selectedFestival,
+    handleSelectFestival,
   } = useSchedule();
-  const { day, id } = useParams();
+  const { day, selectedFestId } = useParams();
+
+  useEffect(() => {
+    handleSelectFestival(selectedFestId);
+  }, []);
 
   const selectedDay = isMySchedulePath
     ? getSelectedDay(mySchedule, day)

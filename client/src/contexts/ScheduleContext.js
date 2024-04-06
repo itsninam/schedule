@@ -65,6 +65,7 @@ function ScheduleProvider({ children }) {
   };
 
   const dayRoutes = getDayRoutes(selectedFestival);
+  console.log(dayRoutes, selectedFestival, "day");
 
   const dayOneSchedule =
     selectedFestival &&
@@ -186,10 +187,8 @@ function ScheduleProvider({ children }) {
 
   const handleSelectFestival = (festivalSelection) => {
     setSelectedFestival(
-      myFestival.filter((festival) => festival._id === festivalSelection._id)
+      myFestival.filter((festival) => festival._id === festivalSelection)
     );
-
-    navigate("/schedule");
   };
 
   const handleRemoveFestival = (festival) => {
@@ -224,6 +223,7 @@ function ScheduleProvider({ children }) {
         selectedFestId,
         handleRemoveFestival,
         fetchMyFestival,
+        setSelectedFestival,
       }}
     >
       {children}
