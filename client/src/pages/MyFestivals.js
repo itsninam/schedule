@@ -6,7 +6,11 @@ import EmptyView from "../components/EmptyView";
 import svg from "../assets/page-lost.svg";
 
 function MyFestivals() {
-  const { myFestival } = useSchedule();
+  const { myFestival, fetchMyFestival } = useSchedule();
+
+  useEffect(() => {
+    fetchMyFestival();
+  }, []);
 
   if (myFestival.length === 0) {
     return (
