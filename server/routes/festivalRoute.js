@@ -5,6 +5,7 @@ const {
   getFestival,
   getMyFestival,
   addMyFestival,
+  deleteMyFestival,
 } = require("../controllers/festivalController");
 
 // middleware
@@ -19,5 +20,6 @@ router.use(
 router.get("/festival", getFestival);
 router.get("/myFestival", getMyFestival);
 router.post("/addMyFestival", addMyFestival);
+router.post("/deleteMyFestival/:id", deleteMyFestival);
 
 module.exports = router;

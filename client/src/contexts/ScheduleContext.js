@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+} from "react";
 import formatDate from "../helpers/formatDate";
 import { useLocation, useNavigate } from "react-router";
 import axios from "axios";
@@ -23,10 +29,6 @@ function ScheduleProvider({ children }) {
   const isMySchedulePath = location.pathname.includes("my-schedule");
   const selectedFestId = selectedFestival.find((festival) => festival._id)?._id;
 
-  useEffect(() => {
-    fetchMyFestival();
-  }, []);
-
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -50,7 +52,7 @@ function ScheduleProvider({ children }) {
     }
   };
 
-  const fetchMyFestival = async () => {
+  const fetchMyFestival = useCallback(async () => {
     setIsLoading(true);
 
     try {
@@ -62,7 +64,7 @@ function ScheduleProvider({ children }) {
       console.log(error);
       // setErrorMessage(error.response.data.message);
     }
-  };
+  }, []);
 
   const dayRoutes = getDayRoutes(selectedFestival);
 
@@ -191,7 +193,21 @@ function ScheduleProvider({ children }) {
       (fest) => fest._id !== festival._id
     );
     setMyFestival(filteredFestivals);
+
+    try {
+      axios
+        .post(`http://localhost:8000/deleteMyFestival/${festival._id}`)
+        .then((response) => {
+          console.log(response.data.message);
+        });
+    } catch (err) {
+      console.log(err);
+    }
   };
+
+  useEffect(() => {
+    fetchMyFestival();
+  }, [fetchMyFestival]);
 
   return (
     <ScheduleContext.Provider

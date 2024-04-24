@@ -1,16 +1,17 @@
-import React from "react";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useSchedule } from "../contexts/ScheduleContext";
 import Festival from "../components/Festival";
 import EmptyView from "../components/EmptyView";
 import svg from "../assets/page-lost.svg";
 
 function MyFestivals() {
-  const { myFestival, fetchMyFestival } = useSchedule();
+  const { myFestival } = useSchedule();
+
+  const { fetchMyFestival } = useSchedule();
 
   useEffect(() => {
     fetchMyFestival();
-  }, []);
+  }, [fetchMyFestival]);
 
   if (myFestival.length === 0) {
     return (

@@ -62,9 +62,25 @@ const addMyFestival = async (req, res) => {
   }
 };
 
+const deleteMyFestival = async (req, res) => {
+  try {
+    const festivalId = req.params.id;
+    const deletedFestival = await MyFestivalModel.findByIdAndDelete(festivalId);
+
+    if (!deletedFestival) {
+      return res.status(404).json({ message: "Festival not found" });
+    }
+
+    res.json({ message: "Festival deleted" });
+  } catch (err) {
+    res.status(500).json({ message: "Internal error" });
+  }
+};
+
 module.exports = {
   test,
   getFestival,
   getMyFestival,
   addMyFestival,
+  deleteMyFestival,
 };

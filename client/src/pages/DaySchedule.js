@@ -21,7 +21,7 @@ function DaySchedule() {
     if (!isMySchedulePath) {
       handleSelectFestival(selectedFestId);
     }
-  }, []);
+  }, [isMySchedulePath, selectedFestId]);
 
   const selectedDay = isMySchedulePath
     ? getSelectedDay(mySchedule, day)
