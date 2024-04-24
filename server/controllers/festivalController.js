@@ -45,10 +45,21 @@ const getMyFestival = async (req, res) => {
 
 const addMyFestival = async (req, res) => {
   const myFestival = req.body;
-  const newFestival = new MyFestivalModel(myFestival);
-  await newFestival.save();
+  const { festivalName } = req.body;
 
-  res.json(myFestival);
+  try {
+    const festivalExists = await MyFestivalModel.findOne({ festivalName });
+
+    if (festivalExists) {
+      return res.status(200).json({ message: "Festival already added" });
+    } else {
+      const newFestival = new MyFestivalModel(myFestival);
+      await newFestival.save();
+      return res.status(200).json({ message: "Festival added successfully" });
+    }
+  } catch (error) {
+    return res.status(500).json({ message: "Internal error" });
+  }
 };
 
 module.exports = {

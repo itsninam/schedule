@@ -160,28 +160,24 @@ function ScheduleProvider({ children }) {
   };
 
   const addMyFestival = (data) => {
-    const festivalExists = myFestival.some(
-      (festival) => festival._id === data._id
-    );
+    try {
+      const newFestival = {
+        festivalName: data.festivalName,
+        festivalImage: data.festivalImage,
+        festivalDates: data.festivalDates,
+        festivalLocation: data.festivalLocation,
+        festivalThumbnail: data.festivalThumbnail,
+        festivalData: data.festivalData,
+      };
 
-    if (!festivalExists) {
-      // setMyFestival([...myFestival, data]);
+      axios
+        .post("http://localhost:8000/addMyFestival", newFestival)
+        .then((response) => {
+          console.log(response.data.message);
+        });
+    } catch (error) {
+      console.log(error);
     }
-
-    const newFestival = {
-      festivalName: data.festivalName,
-      festivalImage: data.festivalImage,
-      festivalDates: data.festivalDates,
-      festivalLocation: data.festivalLocation,
-      festivalThumbnail: data.festivalThumbnail,
-      festivalData: data.festivalData,
-    };
-
-    axios
-      .post("http://localhost:8000/addMyFestival", newFestival)
-      .then((response) => {
-        console.log("festival created");
-      });
   };
 
   const handleSelectFestival = (festivalSelection) => {
