@@ -18,7 +18,9 @@ function DaySchedule() {
   const { day, selectedFestId } = useParams();
 
   useEffect(() => {
-    handleSelectFestival(selectedFestId);
+    if (!isMySchedulePath) {
+      handleSelectFestival(selectedFestId);
+    }
   }, []);
 
   const selectedDay = isMySchedulePath

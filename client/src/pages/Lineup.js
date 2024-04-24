@@ -1,27 +1,34 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import { useSchedule } from "../contexts/ScheduleContext";
 import Loading from "../components/Loading";
 import Button from "../components/Button";
 import { useParams } from "react-router-dom";
 
 function Lineup() {
-  const { scheduleData, isLoading, addMyFestival, selectedFestival } =
-    useSchedule();
+  const {
+    scheduleData,
+    isLoading,
+    addMyFestival,
+    handleSelectFestival,
+    selectedFestival,
+  } = useSchedule();
 
   const { festival } = useParams();
+
+  useEffect(() => {
+    if (festival !== undefined) {
+      handleSelectFestival(festival);
+    }
+  }, []);
 
   if (isLoading) {
     return <Loading />;
   }
 
-  const selectedFest = selectedFestival?.filter(
-    (fest) => fest._id === festival
-  );
-
-  if (festival) {
+  if (festival !== undefined) {
     return (
       <section className="image-container">
-        {selectedFest.map((data) => {
+        {selectedFestival.map((data) => {
           return (
             <Fragment key={data._id}>
               <img src={data.festivalImage} alt={data.festivalName} />

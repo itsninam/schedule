@@ -60,12 +60,11 @@ function ScheduleProvider({ children }) {
       setMyFestival(response.data);
     } catch (error) {
       console.log(error);
-      setErrorMessage(error.response.data.message);
+      // setErrorMessage(error.response.data.message);
     }
   };
 
   const dayRoutes = getDayRoutes(selectedFestival);
-  console.log(dayRoutes, selectedFestival, "day");
 
   const dayOneSchedule =
     selectedFestival &&

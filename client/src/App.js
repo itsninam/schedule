@@ -26,7 +26,6 @@ function App() {
   } = useSchedule();
 
   const scheduleRoute = scheduleRoutes(selectedFestId);
-  console.log(dayOneSchedule, "sched");
 
   return (
     <>
