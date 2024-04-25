@@ -33,10 +33,7 @@ function App() {
       <Wrapper>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route
-            path="lineup"
-            element={scheduleData.length === 0 ? <NoFestivals /> : <Lineup />}
-          />
+          <Route path="lineup/:festival" element={<Lineup />} />
 
           <Route
             path="schedule"
@@ -81,7 +78,7 @@ function App() {
                   index
                   element={<Navigate to={selectedFestId} replace />}
                 />
-                <Route path=":festival" element={<Lineup />} />
+                <Route path=":id" element={<Lineup />} />
               </>
             </Route>
           </Route>

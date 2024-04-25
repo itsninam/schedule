@@ -11,13 +11,18 @@ function Lineup() {
     addMyFestival,
     handleSelectFestival,
     selectedFestival,
+    fetchData,
   } = useSchedule();
 
-  const { festival } = useParams();
+  const { id, festival } = useParams();
 
   useEffect(() => {
+    if (id !== undefined) {
+      handleSelectFestival(id);
+    }
+
     if (festival !== undefined) {
-      handleSelectFestival(festival);
+      fetchData(festival);
     }
   }, []);
 
@@ -25,7 +30,7 @@ function Lineup() {
     return <Loading />;
   }
 
-  if (festival !== undefined) {
+  if (id !== undefined) {
     return (
       <section className="image-container">
         {selectedFestival.map((data) => {

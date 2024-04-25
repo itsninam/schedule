@@ -32,18 +32,18 @@ function ScheduleProvider({ children }) {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    fetchData();
+    fetchData(userInput);
     setUserInput("");
   };
 
-  const fetchData = async () => {
+  const fetchData = async (input) => {
     setIsLoading(true);
     try {
       const response = await axios.get(
-        `http://localhost:8000/festival?festivalName=${userInput}`
+        `http://localhost:8000/festival?festivalName=${input}`
       );
       setErrorMessage("");
-      navigate("/lineup");
+      navigate(`/lineup/${response.data[0].festivalName}`);
       setScheduleData(response.data);
       setIsLoading(false);
     } catch (error) {
@@ -235,6 +235,7 @@ function ScheduleProvider({ children }) {
         handleRemoveFestival,
         fetchMyFestival,
         setSelectedFestival,
+        fetchData,
       }}
     >
       {children}
