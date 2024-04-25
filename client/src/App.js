@@ -17,13 +17,8 @@ import MyFestivals from "./pages/MyFestivals";
 import NoFestivals from "./components/NoFestivals";
 
 function App() {
-  const {
-    dayOneSchedule,
-    dayRoutes,
-    scheduleData,
-    selectedFestId,
-    myFestival,
-  } = useSchedule();
+  const { dayOneSchedule, dayRoutes, selectedFestId, myFestival } =
+    useSchedule();
 
   const scheduleRoute = scheduleRoutes(selectedFestId);
 

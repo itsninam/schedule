@@ -5,13 +5,15 @@ import EmptyView from "../components/EmptyView";
 import svg from "../assets/page-lost.svg";
 
 function MyFestivals() {
-  const { myFestival } = useSchedule();
-
-  const { fetchMyFestival } = useSchedule();
+  const { myFestival, fetchMyFestival, isLoading } = useSchedule();
 
   useEffect(() => {
     fetchMyFestival();
   }, [fetchMyFestival]);
+
+  if (isLoading) {
+    return "Loading";
+  }
 
   if (myFestival.length === 0) {
     return (

@@ -24,6 +24,8 @@ function Lineup() {
     if (festival !== undefined) {
       fetchData(festival);
     }
+
+    // eslint-disable-next-line
   }, []);
 
   if (isLoading) {

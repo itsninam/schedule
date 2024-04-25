@@ -182,11 +182,14 @@ function ScheduleProvider({ children }) {
     }
   };
 
-  const handleSelectFestival = (festivalSelection) => {
-    setSelectedFestival(
-      myFestival.filter((festival) => festival._id === festivalSelection)
-    );
-  };
+  const handleSelectFestival = useCallback(
+    (festivalSelection) => {
+      setSelectedFestival(
+        myFestival.filter((festival) => festival._id === festivalSelection)
+      );
+    },
+    [myFestival]
+  );
 
   const handleRemoveFestival = (festival) => {
     const filteredFestivals = myFestival.filter(
