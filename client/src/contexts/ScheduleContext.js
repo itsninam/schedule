@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-  useCallback,
-} from "react";
+import React, { createContext, useContext, useState, useCallback } from "react";
 import formatDate from "../helpers/formatDate";
 import { useLocation, useNavigate } from "react-router";
 import axios from "axios";
@@ -20,7 +14,7 @@ function ScheduleProvider({ children }) {
   const [selectedFestival, setSelectedFestival] = useState([]);
   const [isEventAddedToSchedule, setIsEventAddedToSchedule] = useState({});
   const [userInput, setUserInput] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
 
   const location = useLocation();
@@ -37,7 +31,6 @@ function ScheduleProvider({ children }) {
   };
 
   const fetchData = async (input) => {
-    setIsLoading(true);
     try {
       const response = await axios.get(
         `http://localhost:8000/festival?festivalName=${input}`
@@ -47,20 +40,20 @@ function ScheduleProvider({ children }) {
       setScheduleData(response.data);
       setIsLoading(false);
     } catch (error) {
+      setIsLoading(false);
       console.log(error);
       setErrorMessage(error.response.data.message);
     }
   };
 
   const fetchMyFestival = useCallback(async () => {
-    setIsLoading(true);
-
     try {
       const response = await axios.get("http://localhost:8000/myFestival");
       setErrorMessage("");
       setIsLoading(false);
       setMyFestival(response.data);
     } catch (error) {
+      setIsLoading(false);
       console.log(error);
       // setErrorMessage(error.response.data.message);
     }
@@ -207,10 +200,6 @@ function ScheduleProvider({ children }) {
       console.log(err);
     }
   };
-
-  useEffect(() => {
-    fetchMyFestival();
-  }, [fetchMyFestival]);
 
   return (
     <ScheduleContext.Provider

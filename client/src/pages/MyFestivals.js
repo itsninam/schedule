@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useSchedule } from "../contexts/ScheduleContext";
 import Festival from "../components/Festival";
 import EmptyView from "../components/EmptyView";
+import Loading from "../components/Loading";
 import svg from "../assets/page-lost.svg";
 
 function MyFestivals() {
@@ -12,7 +13,7 @@ function MyFestivals() {
   }, [fetchMyFestival]);
 
   if (isLoading) {
-    return "Loading";
+    return <Loading />;
   }
 
   if (myFestival.length === 0) {

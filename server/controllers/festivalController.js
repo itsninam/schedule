@@ -32,7 +32,7 @@ const getMyFestival = async (req, res) => {
     const myFestival = await MyFestivalModel.find({});
 
     if (!myFestival || myFestival.length === 0) {
-      return res.status(400).json({ message: "No festivals found." });
+      return res.status(404).json({ message: "No festivals found." });
     }
 
     res.status(200).json(myFestival);
