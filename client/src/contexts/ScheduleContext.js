@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useState, useCallback } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useCallback,
+  useEffect,
+} from "react";
 import formatDate from "../helpers/formatDate";
 import { useLocation, useNavigate } from "react-router";
 import axios from "axios";
@@ -59,6 +65,19 @@ function ScheduleProvider({ children }) {
     }
   }, []);
 
+  const fetchMySchedule = useCallback(async () => {
+    try {
+      const response = await axios.get("http://localhost:8000/getMySchedule");
+      setErrorMessage("");
+      setIsLoading(false);
+      setMySchedule(response.data);
+    } catch (error) {
+      setIsLoading(false);
+      console.log(error);
+      // setErrorMessage(error.response.data.message);
+    }
+  }, []);
+
   const dayRoutes = getDayRoutes(selectedFestival);
 
   const dayOneSchedule =
@@ -88,7 +107,12 @@ function ScheduleProvider({ children }) {
     }, 500);
   };
 
+  useEffect(() => {
+    fetchMySchedule();
+  }, []);
+
   const handleSelectCheckmark = (selectedEvent) => {
+    fetchMySchedule();
     setIsEventAddedToSchedule({
       ...isEventAddedToSchedule,
       [selectedEvent.title]: !isEventAddedToSchedule[selectedEvent.title],
@@ -102,55 +126,27 @@ function ScheduleProvider({ children }) {
     eventItemRef.current.classList.add("remove-slide-left");
   };
 
-  const handleAddEventToSchedule = (day, selectedDays, selectedEvent) => {
-    const festivalName = selectedDays.find(
-      (day) => day.festivalName
-    ).festivalName;
+  const handleAddEventToSchedule = async (day, selectedDays, selectedEvent) => {
+    try {
+      const festivalName = selectedDays.find(
+        (day) => day.festivalName
+      ).festivalName;
 
-    const festivalExists = mySchedule.find(
-      (day) => day.festivalName === festivalName
-    );
+      const response = await axios.post("http://localhost:8000/addMySchedule", {
+        day,
+        selectedEvent,
+        festivalName,
+      });
 
-    if (festivalExists) {
-      const dayExists = festivalExists.festivalData.find(
-        (data) => data.day === day.day
-      );
-
-      if (dayExists) {
-        const eventExists = dayExists.timeSlot.find(
-          (slot) => slot.title === selectedEvent.title
-        );
-
-        if (!eventExists) {
-          dayExists.timeSlot.push(selectedEvent);
-        } else {
-          if (!isMySchedulePath) {
-            filterEvents(selectedEvent);
-          }
-        }
+      if (response.status === 200) {
+        console.log(response.data.message);
       } else {
-        festivalExists.festivalData.push({
-          id: day.id,
-          day: day.day,
-          timeSlot: [selectedEvent],
-        });
+        console.error("Failed to add event to schedule");
       }
-    } else {
-      setMySchedule([
-        ...mySchedule,
-        {
-          festivalName: selectedDays[0].festivalName,
-          festivalImage: selectedDays[0].festivalImage,
-          festivalData: [
-            {
-              id: day.id,
-              day: day.day,
-              timeSlot: [selectedEvent],
-            },
-          ],
-        },
-      ]);
+    } catch (error) {
+      console.error(error);
     }
+
     handleSelectCheckmark(selectedEvent);
   };
 
