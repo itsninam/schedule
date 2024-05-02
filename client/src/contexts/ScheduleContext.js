@@ -78,7 +78,7 @@ function ScheduleProvider({ children }) {
     }
   }, []);
 
-  const dayRoutes = getDayRoutes(selectedFestival);
+  const dayRoutes = getDayRoutes(selectedFestival, isMySchedulePath);
 
   const dayOneSchedule =
     selectedFestival &&
@@ -109,7 +109,7 @@ function ScheduleProvider({ children }) {
 
   useEffect(() => {
     fetchMySchedule();
-  }, []);
+  }, [fetchMySchedule]);
 
   const handleSelectCheckmark = (selectedEvent) => {
     fetchMySchedule();

@@ -59,10 +59,15 @@ function App() {
               <>
                 <Route
                   index
-                  element={<Navigate to={dayOneSchedule} replace />}
+                  element={
+                    <Navigate
+                      to={`${dayOneSchedule}/${selectedFestId}`}
+                      replace
+                    />
+                  }
                 />
                 <Route
-                  path={"/schedule/my-schedule/:day"}
+                  path={"/schedule/my-schedule/:day/:id"}
                   element={<DaySchedule />}
                 />
               </>
