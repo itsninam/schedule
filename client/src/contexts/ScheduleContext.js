@@ -124,10 +124,6 @@ function ScheduleProvider({ children }) {
     selectedEvent,
     eventItemRef = { current: null }
   ) => {
-    console.log("Deleting time slot...");
-    console.log("Festival ID:", selectedDayObj[0]._id);
-    console.log("Time Slot ID:", selectedEvent._id);
-
     // Filter events and update state
     filterEvents(selectedEvent);
     handleSelectCheckmark(selectedEvent);
@@ -139,10 +135,14 @@ function ScheduleProvider({ children }) {
 
     eventItemRef.current.classList.add("remove-slide-left");
 
+    const festivalName = selectedDayObj.find(
+      (obj) => obj.festivalName
+    ).festivalName;
+
     try {
       axios
         .delete(
-          `http://localhost:8000/deleteMyEvent/${selectedDayObj[0]._id}/${selectedEvent._id}`
+          `http://localhost:8000/deleteMyEvent/${festivalName}/${selectedEvent._id}`
         )
         .then((response) => {
           console.log(response.data.message);

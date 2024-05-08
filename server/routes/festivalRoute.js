@@ -26,6 +26,6 @@ router.post("/addMyFestival", addMyFestival);
 router.post("/deleteMyFestival/:id", deleteMyFestival);
 router.post("/addMySchedule", addMySchedule);
 router.get("/getMySchedule", getMySchedule);
-router.delete("/deleteMyEvent/:festivalId/:timeSlotId", deleteMyEvent);
+router.delete("/deleteMyEvent/:festivalName/:timeSlotId", deleteMyEvent);
 
 module.exports = router;

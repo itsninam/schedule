@@ -7,6 +7,7 @@ function EventItem({ day, eventItem, selectedDayObj }) {
     isEventAddedToSchedule,
     handleRemoveEvent,
     isMySchedulePath,
+    selectedFestival,
   } = useSchedule();
 
   const eventItemRef = useRef(null);
@@ -35,7 +36,7 @@ function EventItem({ day, eventItem, selectedDayObj }) {
         <span
           className="material-symbols-outlined"
           onClick={() =>
-            handleRemoveEvent(selectedDayObj, eventItem, eventItemRef)
+            handleRemoveEvent(selectedFestival, eventItem, eventItemRef)
           }
         >
           delete

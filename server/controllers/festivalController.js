@@ -149,9 +149,11 @@ const getMySchedule = async (req, res) => {
 
 const deleteMyEvent = async (req, res) => {
   try {
-    const { festivalId, timeSlotId } = req.params;
+    const { festivalName, timeSlotId } = req.params;
 
-    const festival = await MyScheduleModel.findById(festivalId);
+    const festival = await MyScheduleModel.findOne({
+      festivalName: festivalName,
+    });
 
     if (!festival) {
       return res.status(404).json({ message: "Festival not found" });
