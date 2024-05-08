@@ -23,7 +23,7 @@ router.use(
 router.get("/festival", getFestival);
 router.get("/myFestival", getMyFestival);
 router.post("/addMyFestival", addMyFestival);
-router.post("/deleteMyFestival/:id", deleteMyFestival);
+router.delete("/deleteMyFestival/:id", deleteMyFestival);
 router.post("/addMySchedule", addMySchedule);
 router.get("/getMySchedule", getMySchedule);
 router.delete("/deleteMyEvent/:festivalName/:timeSlotId", deleteMyEvent);
