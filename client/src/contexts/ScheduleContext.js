@@ -119,11 +119,40 @@ function ScheduleProvider({ children }) {
     });
   };
 
-  const handleRemoveEvent = (selectedEvent, eventItemRef = 0) => {
+  const handleRemoveEvent = (
+    selectedDayObj,
+    selectedEvent,
+    eventItemRef = { current: null }
+  ) => {
+    console.log("Deleting time slot...");
+    console.log("Festival ID:", selectedDayObj[0]._id);
+    console.log("Time Slot ID:", selectedEvent._id);
+
+    // Filter events and update state
     filterEvents(selectedEvent);
     handleSelectCheckmark(selectedEvent);
 
+    if (!eventItemRef.current) {
+      console.error("Event item reference is missing.");
+      return;
+    }
+
     eventItemRef.current.classList.add("remove-slide-left");
+
+    try {
+      axios
+        .delete(
+          `http://localhost:8000/deleteMyEvent/${selectedDayObj[0]._id}/${selectedEvent._id}`
+        )
+        .then((response) => {
+          console.log(response.data.message);
+        })
+        .catch((error) => {
+          console.error("Error deleting time slot:", error);
+        });
+    } catch (err) {
+      console.error("Error in delete request:", err);
+    }
   };
 
   const handleAddEventToSchedule = async (day, selectedDays, selectedEvent) => {
@@ -188,7 +217,7 @@ function ScheduleProvider({ children }) {
 
     try {
       axios
-        .post(`http://localhost:8000/deleteMyFestival/${festival._id}`)
+        .delete(`http://localhost:8000/deleteMyFestival/${festival._id}`)
         .then((response) => {
           console.log(response.data.message);
         });

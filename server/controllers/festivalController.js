@@ -147,6 +147,38 @@ const getMySchedule = async (req, res) => {
   }
 };
 
+const deleteMyEvent = async (req, res) => {
+  try {
+    const { festivalId, timeSlotId } = req.params;
+
+    const festival = await MyScheduleModel.findById(festivalId);
+
+    if (!festival) {
+      return res.status(404).json({ message: "Festival not found" });
+    }
+
+    const dayIndex = festival.festivalData.findIndex((day) =>
+      day.timeSlot.find((slot) => slot._id.toString() === timeSlotId)
+    );
+
+    if (dayIndex === -1) {
+      return res.status(404).json({ message: "Time slot not found" });
+    }
+
+    const updatedTimeSlots = festival.festivalData[dayIndex].timeSlot.filter(
+      (slot) => slot._id.toString() !== timeSlotId
+    );
+
+    festival.festivalData[dayIndex].timeSlot = updatedTimeSlots;
+    await festival.save();
+
+    res.json({ message: "Time slot deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting time slot:", error);
+    res.status(500).json({ message: "Internal error" });
+  }
+};
+
 module.exports = {
   test,
   getFestival,
@@ -155,4 +187,5 @@ module.exports = {
   deleteMyFestival,
   addMySchedule,
   getMySchedule,
+  deleteMyEvent,
 };

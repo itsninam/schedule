@@ -34,7 +34,9 @@ function EventItem({ day, eventItem, selectedDayObj }) {
       {isMySchedulePath ? (
         <span
           className="material-symbols-outlined"
-          onClick={() => handleRemoveEvent(eventItem, eventItemRef)}
+          onClick={() =>
+            handleRemoveEvent(selectedDayObj, eventItem, eventItemRef)
+          }
         >
           delete
         </span>
