@@ -14,6 +14,7 @@ function DaySchedule() {
     isMySchedulePath,
     selectedFestival,
     handleSelectFestival,
+    fetchMySchedule,
   } = useSchedule();
   const { day, selectedFestId, id } = useParams();
 
@@ -22,8 +23,15 @@ function DaySchedule() {
       handleSelectFestival(selectedFestId);
     } else {
       handleSelectFestival(id);
+      fetchMySchedule();
     }
-  }, [isMySchedulePath, selectedFestId, handleSelectFestival, id]);
+  }, [
+    isMySchedulePath,
+    selectedFestId,
+    handleSelectFestival,
+    id,
+    fetchMySchedule,
+  ]);
 
   const selectedDay = isMySchedulePath
     ? getSelectedDay(mySchedule, day)

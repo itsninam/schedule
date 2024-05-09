@@ -213,11 +213,18 @@ function ScheduleProvider({ children }) {
     const filteredFestivals = myFestival.filter(
       (fest) => fest._id !== festival._id
     );
+
+    const filteredSchedule = mySchedule.filter(
+      (fest) => fest.festivalName !== festival.festivalName
+    );
     setMyFestival(filteredFestivals);
+    setMySchedule(filteredSchedule);
 
     try {
       axios
-        .delete(`http://localhost:8000/deleteMyFestival/${festival._id}`)
+        .delete(
+          `http://localhost:8000/deleteMyFestival/${festival._id}/${festival.festivalName}`
+        )
         .then((response) => {
           console.log(response.data.message);
         });
@@ -253,6 +260,7 @@ function ScheduleProvider({ children }) {
         fetchMyFestival,
         setSelectedFestival,
         fetchData,
+        fetchMySchedule,
       }}
     >
       {children}

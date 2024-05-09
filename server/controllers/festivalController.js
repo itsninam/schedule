@@ -66,7 +66,11 @@ const addMyFestival = async (req, res) => {
 const deleteMyFestival = async (req, res) => {
   try {
     const festivalId = req.params.id;
+    const festivalName = req.params.festivalName;
     const deletedFestival = await MyFestivalModel.findByIdAndDelete(festivalId);
+    const deletedSchedule = await MyScheduleModel.findOneAndDelete({
+      festivalName: festivalName,
+    });
 
     if (!deletedFestival) {
       return res.status(404).json({ message: "Festival not found" });
@@ -101,11 +105,11 @@ const addMySchedule = async (req, res) => {
       );
 
       if (dayExists) {
-        const eventExistsIndex = dayExists.timeSlot.findIndex(
+        const eventExistsIndex = dayExists.timeSlot.find(
           (slot) => slot.title === selectedEvent.title
         );
 
-        if (eventExistsIndex !== -1) {
+        if (eventExistsIndex) {
           dayExists.timeSlot.splice(eventExistsIndex, 1);
           res.status(200).json({
             message: "Event removed successfully",
