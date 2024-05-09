@@ -54,6 +54,7 @@ a {
 .wrapper {
   width: 90%;
   margin: 0 auto;
+  height: calc(100vh - 162px);
 }
 
 section {
@@ -109,6 +110,12 @@ button.primary {
   height: 1px;
   top: auto;
   overflow: hidden;
+}
+
+.sc-bgqQPU.plGKZ {
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }
 
 /* Typography */
